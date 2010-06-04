@@ -193,9 +193,36 @@ void mouse(int button, int state, int mx, int my) {
 	}
 }
 
-// menu
-void menu() {
+void ground_color(int option) {}
+void background_color(int option) {}
+void shape (int option) {}
 
+// menu
+void createMenu() {
+	int submenu1 = glutCreateMenu(ground_color);
+	int submenu2 = glutCreateMenu(background_color);
+	int submenu3 = glutCreateMenu(shape);
+	
+	glutSetMenu(submenu1);
+	glutAddMenuEntry("Red", 1);
+	glutAddMenuEntry("Green", 2);
+	glutAddMenuEntry("Blue", 3);
+	glutSetMenu(submenu2);
+	glutAddMenuEntry("Red", 1);
+	glutAddMenuEntry("Green", 2);
+	glutAddMenuEntry("Blue", 3);
+	glutSetMenu(submenu3);
+	glutAddMenuEntry("Cottage", 1);
+	glutAddMenuEntry("Teapot", 2);
+	glutCreateMenu(shape);
+	glutCreateMenu(ground_color);
+	glutCreateMenu(background_color);
+	glutCreateMenu(shape);
+	glutAddSubMenu("Ground color", submenu1);
+	glutAddSubMenu("Background color", submenu2);
+	glutAddSubMenu("Shape", submenu3);
+	
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 // main
@@ -206,13 +233,14 @@ int main(int argc, char *argv[]) {
 	glutInitWindowPosition(300, 300);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow("Cottages");
-	glutReshapeFunc(&reshape);
-	glutDisplayFunc(&draw);
-	glutIdleFunc(&idle);
-	glutKeyboardFunc(&pressKeys);
-	glutKeyboardUpFunc(&releaseKeys);
-	glutMotionFunc(&motion);
-	glutMouseFunc(&mouse);
+	createMenu();
+	glutReshapeFunc(reshape);
+	glutDisplayFunc(draw);
+	glutIdleFunc(idle);
+	glutKeyboardFunc(pressKeys);
+	glutKeyboardUpFunc(releaseKeys);
+	glutMotionFunc(motion);
+	glutMouseFunc(mouse);
 	glutMainLoop();
 	return 0;
 }
