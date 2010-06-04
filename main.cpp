@@ -18,26 +18,10 @@ float x = 0, y = 1.75, z = 5;
 float lx = 0, ly = 0, lz = -1;
 int delta_move = 0;
 
-void reshape(int width, int height) {
-	if (height == 0) height = 1;
-	ratio = 1 * width / height;
-	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	
-	glViewport(0, 0, width, height);
-	
-	gluPerspective(45, ratio, 1, 1000);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(x, y, z,
-			  x + lx, y + ly, z + lz,
-			  0, 1, 0);
-}
-
 void cottage() {
 	glColor3f(1, 0, 0);
 	glutSolidTeapot(1);
+	glFlush();
 }
 
 void orientation(float angle) {
@@ -84,24 +68,43 @@ void draw() {
 			cottage();
 			glPopMatrix();
 		}
-		glutSwapBuffers();
 	}
+	glutSwapBuffers();
 }
 
-void pressKey(int key, int x, int y) {
+void reshape(int width, int height) {
+	if (height == 0) height = 1;
+	ratio = 1 * width / height;
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	
+	glViewport(0, 0, width, height);
+	
+	gluPerspective(45, ratio, 1, 1000);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(x, y, z,
+			  x + lx, y + ly, z + lz,
+			  0, 1, 0);
+	draw();
+}
+
+void pressKey(int key, int mx, int my) {
 	switch (key) {
-		case GLUT_KEY_LEFT : delta_angle = -0.01;
+		case GLUT_KEY_LEFT : delta_angle = -0.1;
 			break;
-		case GLUT_KEY_RIGHT : delta_angle = 0.01;
+		case GLUT_KEY_RIGHT : delta_angle = 0.1;
 			break;
-		case GLUT_KEY_UP : delta_move = 1;
+		case GLUT_KEY_UP : delta_move = 10;
 			break;
-		case GLUT_KEY_DOWN : delta_move = -1;
+		case GLUT_KEY_DOWN : delta_move = -10;
 			break;
 	}
+	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
-void releaseKey(int key, int x, int y) {
+void releaseKey(int key, int mx, int my) {
 	switch (key) {
 		case GLUT_KEY_LEFT :
 		case GLUT_KEY_RIGHT : delta_angle = 0.0;
@@ -112,7 +115,7 @@ void releaseKey(int key, int x, int y) {
 	}
 }
 
-void processNormalKeys(unsigned char key, int x, int y) {
+void processNormalKeys(unsigned char key, int mx, int my) {
 	if (key == 'q') exit(0);
 }
 
@@ -124,7 +127,6 @@ int main(int argc, char *argv[]) {
 	glutCreateWindow("Cottages");
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(draw);
-	//	glutIgnoreKeyRepeat(1);
 	glutKeyboardFunc(processNormalKeys);
 	glutSpecialFunc(pressKey);
 	glutSpecialUpFunc(releaseKey);
