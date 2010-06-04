@@ -41,8 +41,51 @@ void move(float i) {
 // draw
 
 void cottage() {
+	glPushMatrix();
+	glScaled(0.8, 0.8, 1.1);
+	// walls
 	glColor3f(0, 0, 1);
-	glutSolidCube(1);
+	glBegin(GL_QUADS);
+		glVertex3f(-1, 0, 1);
+		glVertex3f(1, 0, 1);
+		glVertex3f(1, 1, 1);
+		glVertex3f(-1, 1, 1);
+
+		glVertex3f(1, 0, 1);
+		glVertex3f(1, 0, -1);
+		glVertex3f(1, 1, -1);
+		glVertex3f(1, 1, 1);
+	
+		glVertex3f(1, 0, -1);
+		glVertex3f(-1, 0, -1);
+		glVertex3f(-1, 1, -1);
+		glVertex3f(1, 1, -1);
+	
+		glVertex3f(-1, 0, 1);
+		glVertex3f(-1, 0, -1);
+		glVertex3f(-1, 1, -1);
+		glVertex3f(-1, 1, 1);
+	glEnd();
+	// roof
+	glColor3f(1, 0, 0);
+	glBegin(GL_TRIANGLES);
+		glVertex3f(-1, 1, 1);
+		glVertex3f(1, 1, 1);
+		glVertex3f(0, 2, 0);
+	
+		glVertex3f(1, 1, 1);
+		glVertex3f(1, 1, -1);
+		glVertex3f(0, 2, 0);
+	
+		glVertex3f(1, 1, -1);
+		glVertex3f(-1, 1, -1);
+		glVertex3f(0, 2, 0);
+	
+		glVertex3f(-1, 1, -1);
+		glVertex3f(-1, 1, 1);
+		glVertex3f(0, 2, 0);
+	glEnd();
+	glPopMatrix();
 	glFlush();
 }
 
@@ -54,6 +97,7 @@ void draw() {
 	}
 	
 	glClearColor(1, 1 ,1 , 1);
+	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// ground
@@ -147,6 +191,11 @@ void mouse(int button, int state, int mx, int my) {
 		delta_angle = 0;
 		delta_move = 0;
 	}
+}
+
+// menu
+void menu() {
+
 }
 
 // main
