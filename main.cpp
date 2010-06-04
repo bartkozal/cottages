@@ -12,8 +12,9 @@
 #include <OpenGL/OpenGL.h>
 #include <math.h>
 #include <stdlib.h>
+#include "imageloader.h"
 
-float x = 0, y = 1.75, z = 5;
+float x = 0, y = 1, z = 20;
 float lx = 0, ly = 0, lz = -1;
 float angle = 0, delta_angle = 0;
 float delta_move = 0;
@@ -21,6 +22,19 @@ float delta_move = 0;
 float background[] = {1, 1, 1, 0};
 float ground[] = {0.9, 0.9, 0.9};
 char object = 'c';
+
+GLuint _textureId, _textureId2;
+
+// textures
+
+GLuint loadTexture(Image* image) {
+	GLuint textureId;
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 
+				 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+	return textureId;
+}
 
 // camera
 
@@ -47,7 +61,6 @@ void move(float i) {
 void cottage() {
 	glPushMatrix();
 	glScaled(0.8, 0.8, 1.1);
-	glTranslatef(0, 1, 0);
 	// walls
 	glColor3f(0, 0, 1);
 	glBegin(GL_QUADS);
@@ -115,17 +128,32 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// ground
+	
+	Image *picture = loadBMP("ground.bmp");
+	_textureId = loadTexture(picture);
+	delete picture;
+	
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
 	glColor3f(ground[0], ground[1], ground[2]);
 	glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);
 		glVertex3f(-100, 0, -100);
-		glVertex3f(-100, 0, 100);
+		glTexCoord2f(0, 100);
+		glVertex3f(-100, 0, 10);
+		glTexCoord2f(100, 100);
 		glVertex3f(100, 0, 100);
+		glTexCoord2f(100, 0);
 		glVertex3f(100, 0, -100);
 	glEnd();
-	
+	glDisable(GL_TEXTURE_2D);
 	// cottages
-	for (int i = -3; i < 3; i++) {
-		for (int j = -3; j < 3; j++) {
+	for (int i = -2; i < 2; i++) {
+		for (int j = -2; j < 2; j++) {
 			glPushMatrix();
 			glTranslatef(i * 5, 0, j * 5);
 			switch (object) {
