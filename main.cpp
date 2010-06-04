@@ -12,20 +12,13 @@
 #include <OpenGL/OpenGL.h>
 #include <math.h>
 #include <stdlib.h>
-#include <stdio.h>
 
-float angle = 0, delta_angle = 0, ratio;
-float x = 0, y = 1.75, z = 5;
+float x = 0, y = 1.5, z = 5;
 float lx = 0, ly = 0, lz = -1;
+float angle = 0, delta_angle = 0;
 float delta_move = 0;
 
-float sky[] = {1, 1, 1, 1};
-
-void cottage() {
-	glColor3f(0, 0, 1);
-	glutSolidCube(1);
-	glFlush();
-}
+// camera
 
 void orientation(float angle) {
 	lx = sin(angle);
@@ -42,7 +35,15 @@ void move(float i) {
 	glLoadIdentity();
 	gluLookAt(x, y, z,
 			  x + lx, y + ly, z + lz,
-			  0, 0, 0);
+			  0, 1, 0);
+}
+
+// draw
+
+void cottage() {
+	glColor3f(0, 0, 1);
+	glutSolidCube(1);
+	glFlush();
 }
 
 void draw() {
@@ -52,7 +53,7 @@ void draw() {
 		orientation(angle);
 	}
 	
-	glClearColor(sky[0], sky[1], sky[2], sky[3]);
+	glClearColor(1, 1 ,1 , 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// ground
@@ -65,10 +66,10 @@ void draw() {
 	glEnd();
 	
 	// cottages
-	for (int i = -2; i < 2; i++) {
-		for (int j = -2; j < 2; j++) {
+	for (int i = -3; i < 3; i++) {
+		for (int j = -3; j < 3; j++) {
 			glPushMatrix();
-			glTranslatef(i * 10, 0, j * 10);
+			glTranslatef(i * 5, 0, j * 5);
 			cottage();
 			glPopMatrix();
 		}
@@ -78,7 +79,7 @@ void draw() {
 
 void reshape(int width, int height) {
 	if (height == 0) height = 1;
-	ratio = 1 * width / height;
+	float ratio = width / height;
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -94,33 +95,40 @@ void reshape(int width, int height) {
 	draw();
 }
 
-void pressArrows(int key, int mx, int my) {
+void idle() {
+	glutPostRedisplay();
+}
+
+// keyboard
+
+void pressKeys(unsigned char key, int mx, int my) {
 	switch (key) {
-		case GLUT_KEY_LEFT : delta_angle = -0.001;
+		case 'a' : delta_angle = -0.003;
 			break;
-		case GLUT_KEY_RIGHT : delta_angle = 0.001;
+		case 'd' : delta_angle = 0.003;
 			break;
-		case GLUT_KEY_UP : delta_move = 0.1;
+		case 'w' : delta_move = 0.5;
 			break;
-		case GLUT_KEY_DOWN : delta_move = -0.1;
+		case 's' : delta_move = -0.5;
 			break;
+		case 'q' : exit(0);
+			break;
+
 	}
 }
 
-void releaseArrows(int key, int mx, int my) {
+void releaseKeys(unsigned char key, int mx, int my) {
 	switch (key) {
-		case GLUT_KEY_LEFT :
-		case GLUT_KEY_RIGHT : delta_angle = 0.0;
+		case 'a' :
+		case 'd' : delta_angle = 0;
 			break;
-		case GLUT_KEY_UP :
-		case GLUT_KEY_DOWN : delta_move = 0;
+		case 'w' :
+		case 's' : delta_move = 0;
 			break;	
 	}
 }
 
-void pressKeys(unsigned char key, int mx, int my) {
-	if (key == 'q') exit(0);
-}
+// mouse
 
 void motion(int mx, int my) {
 	int relx = 0, rely = 0;
@@ -129,20 +137,19 @@ void motion(int mx, int my) {
 	
 	relx = mx - width/2;
 	rely = -1 * (my - height/2);
-	delta_angle = relx * 0.00005;
+	delta_angle = relx * 0.00001;
+	delta_move = rely * 0.001;
 	
-	printf("Absolute: %ix%i, Relative: %ix%i\n", mx, my, relx, rely);
 }
 
 void mouse(int button, int state, int mx, int my) {
 	if (button == GLUT_LEFT_BUTTON and state == GLUT_UP) {
-		delta_angle = 0.0;
+		delta_angle = 0;
+		delta_move = 0;
 	}
 }
 
-void idle() {
-	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-}
+// main
 
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
@@ -152,12 +159,11 @@ int main(int argc, char *argv[]) {
 	glutCreateWindow("Cottages");
 	glutReshapeFunc(&reshape);
 	glutDisplayFunc(&draw);
+	glutIdleFunc(&idle);
 	glutKeyboardFunc(&pressKeys);
-	glutSpecialFunc(&pressArrows);
-	glutSpecialUpFunc(&releaseArrows);
+	glutKeyboardUpFunc(&releaseKeys);
 	glutMotionFunc(&motion);
 	glutMouseFunc(&mouse);
-	glutIdleFunc(&idle);
 	glutMainLoop();
 	return 0;
 }
