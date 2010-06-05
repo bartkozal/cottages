@@ -1,0 +1,235 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC38252B11BA605200AFED60 /* ground.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252811BA605200AFED60 /* ground.bmp */; };
+		CC38252C11BA605200AFED60 /* roof.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252911BA605200AFED60 /* roof.bmp */; };
+		CC38252D11BA605200AFED60 /* wall.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252A11BA605200AFED60 /* wall.bmp */; };
+		CC5DBF5611B9A91700E375FB /* imageloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC5DBF5411B9A91700E375FB /* imageloader.cpp */; };
+		CCA60B3611B9152700D0477B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3511B9152700D0477B /* GLUT.framework */; };
+		CCA60B3811B9152700D0477B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3711B9152700D0477B /* OpenGL.framework */; };
+		CCA60B3E11B9153400D0477B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCA60B3D11B9153400D0477B /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CC38252811BA605200AFED60 /* ground.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = ground.bmp; sourceTree = "<group>"; };
+		CC38252911BA605200AFED60 /* roof.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = roof.bmp; sourceTree = "<group>"; };
+		CC38252A11BA605200AFED60 /* wall.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = wall.bmp; sourceTree = "<group>"; };
+		CC5DBF5411B9A91700E375FB /* imageloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imageloader.cpp; sourceTree = "<group>"; };
+		CC5DBF5511B9A91700E375FB /* imageloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageloader.h; sourceTree = "<group>"; };
+		CCA60B2E11B9150F00D0477B /* main.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = main.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCA60B3111B9150F00D0477B /* main-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "main-Info.plist"; sourceTree = "<group>"; };
+		CCA60B3511B9152700D0477B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		CCA60B3711B9152700D0477B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		CCA60B3D11B9153400D0477B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CCA60B2C11B9150F00D0477B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCA60B3611B9152700D0477B /* GLUT.framework in Frameworks */,
+				CCA60B3811B9152700D0477B /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CC38253011BA606900AFED60 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				CC38252811BA605200AFED60 /* ground.bmp */,
+				CC38252911BA605200AFED60 /* roof.bmp */,
+				CC38252A11BA605200AFED60 /* wall.bmp */,
+			);
+			name = textures;
+			sourceTree = "<group>";
+		};
+		CC38255411BA60A500AFED60 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				CC5DBF5411B9A91700E375FB /* imageloader.cpp */,
+				CC5DBF5511B9A91700E375FB /* imageloader.h */,
+				CCA60B2F11B9150F00D0477B /* Products */,
+				CCA60B3111B9150F00D0477B /* main-Info.plist */,
+				CCA60B3511B9152700D0477B /* GLUT.framework */,
+				CCA60B3711B9152700D0477B /* OpenGL.framework */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		CCA60B1B11B914F200D0477B = {
+			isa = PBXGroup;
+			children = (
+				CC38253011BA606900AFED60 /* textures */,
+				CC38255411BA60A500AFED60 /* libs */,
+				CCA60B3D11B9153400D0477B /* main.cpp */,
+			);
+			sourceTree = "<group>";
+		};
+		CCA60B2F11B9150F00D0477B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CCA60B2E11B9150F00D0477B /* main.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CCA60B2D11B9150F00D0477B /* main */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCA60B3411B9150F00D0477B /* Build configuration list for PBXNativeTarget "main" */;
+			buildPhases = (
+				CCA60B2A11B9150F00D0477B /* Resources */,
+				CCA60B2B11B9150F00D0477B /* Sources */,
+				CCA60B2C11B9150F00D0477B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = main;
+			productName = main;
+			productReference = CCA60B2E11B9150F00D0477B /* main.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CCA60B1D11B914F200D0477B /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = CCA60B2011B914F200D0477B /* Build configuration list for PBXProject "cottages" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = CCA60B1B11B914F200D0477B;
+			productRefGroup = CCA60B2F11B9150F00D0477B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CCA60B2D11B9150F00D0477B /* main */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CCA60B2A11B9150F00D0477B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC38252B11BA605200AFED60 /* ground.bmp in Resources */,
+				CC38252C11BA605200AFED60 /* roof.bmp in Resources */,
+				CC38252D11BA605200AFED60 /* wall.bmp in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CCA60B2B11B9150F00D0477B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCA60B3E11B9153400D0477B /* main.cpp in Sources */,
+				CC5DBF5611B9A91700E375FB /* imageloader.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CCA60B1E11B914F200D0477B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		CCA60B1F11B914F200D0477B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		CCA60B3211B9150F00D0477B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "main-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = main;
+			};
+			name = Debug;
+		};
+		CCA60B3311B9150F00D0477B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "main-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = main;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CCA60B2011B914F200D0477B /* Build configuration list for PBXProject "cottages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCA60B1E11B914F200D0477B /* Debug */,
+				CCA60B1F11B914F200D0477B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCA60B3411B9150F00D0477B /* Build configuration list for PBXNativeTarget "main" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCA60B3211B9150F00D0477B /* Debug */,
+				CCA60B3311B9150F00D0477B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CCA60B1D11B914F200D0477B /* Project object */;
+}
