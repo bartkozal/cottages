@@ -19,11 +19,11 @@ float lx = 0, ly = 0, lz = -1;
 float angle = 0, delta_angle = 0;
 float delta_move = 0;
 
-float background[] = {1, 1, 1, 0};
+float background[] = {0.47, 0.75, 0.76, 0};
 float ground[] = {0.9, 0.9, 0.9};
 char object = 'c';
 
-GLuint _textureId, _textureId2;
+GLuint _texture_ground, _texture_wall, _texture_roof;
 
 // textures
 
@@ -59,48 +59,86 @@ void move(float i) {
 // draw
 
 void cottage() {
+
+	glBindTexture(GL_TEXTURE_2D, _texture_wall);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
 	glPushMatrix();
 	glScaled(0.8, 0.8, 1.1);
 	// walls
-	glColor3f(0, 0, 1);
+	glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);
 		glVertex3f(-1, 0, 1);
+		glTexCoord2f(1, 0);
 		glVertex3f(1, 0, 1);
+		glTexCoord2f(1, 1);
 		glVertex3f(1, 1, 1);
+		glTexCoord2f(0, 1);
 		glVertex3f(-1, 1, 1);
-
+		
+		glTexCoord2f(0, 0);
 		glVertex3f(1, 0, 1);
+		glTexCoord2f(1, 0);
 		glVertex3f(1, 0, -1);
+		glTexCoord2f(1, 1);
 		glVertex3f(1, 1, -1);
+		glTexCoord2f(0, 1);
 		glVertex3f(1, 1, 1);
-	
+
+		glTexCoord2f(0, 0);
 		glVertex3f(1, 0, -1);
+		glTexCoord2f(1, 0);
 		glVertex3f(-1, 0, -1);
+		glTexCoord2f(1, 1);
 		glVertex3f(-1, 1, -1);
+		glTexCoord2f(0, 1);
 		glVertex3f(1, 1, -1);
 	
+		glTexCoord2f(0, 0);
 		glVertex3f(-1, 0, 1);
+		glTexCoord2f(1, 0);
 		glVertex3f(-1, 0, -1);
+		glTexCoord2f(1, 1);
 		glVertex3f(-1, 1, -1);
+		glTexCoord2f(0, 1);
 		glVertex3f(-1, 1, 1);
 	glEnd();
 	// roof
-	glColor3f(1, 0, 0);
+	
+	glBindTexture(GL_TEXTURE_2D, _texture_roof);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+	glColor3f(1, 1, 1);
 	glBegin(GL_TRIANGLES);
+		glTexCoord2f(0, 0);
 		glVertex3f(-1, 1, 1);
+		glTexCoord2f(5, 0);
 		glVertex3f(1, 1, 1);
+		glTexCoord2f(2.5, 5);
 		glVertex3f(0, 2, 0);
-	
+		
+		glTexCoord2f(0, 0);
 		glVertex3f(1, 1, 1);
+		glTexCoord2f(5, 0);
 		glVertex3f(1, 1, -1);
+		glTexCoord2f(2.5, 5);
 		glVertex3f(0, 2, 0);
 	
+		glTexCoord2f(0, 0);
 		glVertex3f(1, 1, -1);
+		glTexCoord2f(5, 0);
 		glVertex3f(-1, 1, -1);
+		glTexCoord2f(2.5, 5);
 		glVertex3f(0, 2, 0);
 	
+		glTexCoord2f(0, 0);
 		glVertex3f(-1, 1, -1);
+		glTexCoord2f(5, 0);
 		glVertex3f(-1, 1, 1);
+		glTexCoord2f(2.5, 5);
 		glVertex3f(0, 2, 0);
 	glEnd();
 	glPopMatrix();
@@ -130,12 +168,19 @@ void draw() {
 	// ground
 	
 	Image *picture = loadBMP("ground.bmp");
-	_textureId = loadTexture(picture);
+	_texture_ground = loadTexture(picture);
 	delete picture;
 	
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
-
+	Image *picture2 = loadBMP("wall.bmp");
+	_texture_wall = loadTexture(picture2);
+	delete picture2;
+	
+	Image *picture3 = loadBMP("roof.bmp");
+	_texture_roof = loadTexture(picture3);
+	delete picture3;
+	
+	glEnable(GL_TEXTURE_2D);	
+	glBindTexture(GL_TEXTURE_2D, _texture_ground);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	
@@ -150,7 +195,7 @@ void draw() {
 		glTexCoord2f(100, 0);
 		glVertex3f(100, 0, -100);
 	glEnd();
-	glDisable(GL_TEXTURE_2D);
+
 	// cottages
 	for (int i = -2; i < 2; i++) {
 		for (int j = -2; j < 2; j++) {
@@ -165,6 +210,7 @@ void draw() {
 			glPopMatrix();
 		}
 	}
+	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }
 
@@ -194,13 +240,13 @@ void idle() {
 
 void pressKeys(unsigned char key, int mx, int my) {
 	switch (key) {
-		case 'a' : delta_angle = -0.003;
+		case 'a' : delta_angle = -0.01;
 			break;
-		case 'd' : delta_angle = 0.003;
+		case 'd' : delta_angle = 0.01;
 			break;
-		case 'w' : delta_move = 0.5;
+		case 'w' : delta_move = 1;
 			break;
-		case 's' : delta_move = -0.5;
+		case 's' : delta_move = -1;
 			break;
 		case 'q' : exit(0);
 			break;
@@ -228,8 +274,8 @@ void motion(int mx, int my) {
 	
 	relx = mx - width/2;
 	rely = -1 * (my - height/2);
-	delta_angle = relx * 0.00001;
-	delta_move = rely * 0.001;
+	delta_angle = relx * 0.0001;
+	delta_move = rely * 0.01;
 	
 }
 
