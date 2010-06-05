@@ -179,7 +179,7 @@ void draw() {
 	_texture_roof = loadTexture(picture3);
 	delete picture3;
 	
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _texture_ground);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -217,6 +217,7 @@ void draw() {
 void reshape(int width, int height) {
 	if (height == 0) height = 1;
 	float ratio = width / height;
+	GLfloat light_position[] = { 0, 0, 0, 1 };
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -226,6 +227,7 @@ void reshape(int width, int height) {
 	gluPerspective(45, ratio, 1, 1000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	gluLookAt(x, y, z,
 			  x + lx, y + ly, z + lz,
 			  0, 1, 0);
@@ -344,6 +346,13 @@ void createMenu() {
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
+void lighting() {
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+}
+
+
 // main
 
 int main(int argc, char *argv[]) {
@@ -352,6 +361,7 @@ int main(int argc, char *argv[]) {
 	glutInitWindowPosition(300, 300);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow("Cottages");
+	lighting();
 	createMenu();
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(draw);
