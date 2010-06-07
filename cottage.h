@@ -10,6 +10,10 @@
 #ifndef COTTAGE
 #define COTTAGE
 
+#include <GLUT/GLUT.h>
+#include <OpenGL/OpenGL.h>
+#include "object.h"
+
 class Cottage : private Object {
 	
 public:

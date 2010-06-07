@@ -7,58 +7,48 @@
  *
  */
 
-#include <GLUT/GLUT.h>
-#include <OpenGL/OpenGL.h>
-#include "object.h"
 #include "ground.h"
 
-class Ground : private Object {
+Ground::Ground() {
+	this->red = 0.9;
+	this->green = 0.9;
+	this->blue = 0.9;
+	this->draw();
+}
+
+Ground::Ground(float red, float green, float blue) {
+	this->red = red;
+	this->green = green;
+	this->blue = blue;
+	this->draw();
+}
 	
-public:
+void Ground::draw() {
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+	texture_ground = this->load_texture("ground.bmp");
+	this->draw_ground();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+	glFlush();
+}
+
+void Ground::draw_ground() {
+	glBindTexture(GL_TEXTURE_2D, texture_ground);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glColor3f(red, green, blue);
 	
-	Ground() {}
+	glBegin(GL_QUADS);
 	
-	Ground(int red, int green, int blue) {
-		this->red = red;
-		this->green = green;
-		this->blue = blue;
-		this->draw();
-	}
+	glTexCoord2f(0, 0);
+	glVertex3f(-100, 0, -100);
+	glTexCoord2f(0, 100);
+	glVertex3f(-100, 0, 10);
+	glTexCoord2f(100, 100);
+	glVertex3f(100, 0, 100);
+	glTexCoord2f(100, 0);
+	glVertex3f(100, 0, -100);
 	
-	
-private:
-	
-	int red, green, blue;
-	GLuint texture_ground;
-	
-	void draw() {
-		glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
-		texture_ground = this->load_texture("ground.bmp");
-		this->draw_ground();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		glFlush();
-	}
-	
-	void draw_ground() {
-		glBindTexture(GL_TEXTURE_2D, texture_ground);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glColor3f(red, green, blue);
-		
-		glBegin(GL_QUADS);
-		
-		glTexCoord2f(0, 0);
-		glVertex3f(-100, 0, -100);
-		glTexCoord2f(0, 100);
-		glVertex3f(-100, 0, 10);
-		glTexCoord2f(100, 100);
-		glVertex3f(100, 0, 100);
-		glTexCoord2f(100, 0);
-		glVertex3f(100, 0, -100);
-		
-		glEnd();
-	}
-	
-};
+	glEnd();
+}

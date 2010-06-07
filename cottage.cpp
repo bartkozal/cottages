@@ -7,16 +7,11 @@
  *
  */
 
-#include <GLUT/GLUT.h>
-#include <OpenGL/OpenGL.h>
-#include "object.h"
 #include "cottage.h"
-
 
 Cottage::Cottage() {
 	this->draw();
 }
-
 
 void Cottage::draw() {
 	glPushMatrix();
