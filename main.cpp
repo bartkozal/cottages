@@ -11,8 +11,8 @@
 #include <OpenGL/OpenGL.h>
 #include <math.h>
 #include <stdlib.h>
-#include "imageloader.h"
 
+#include "ground.cpp"
 #include "cottage.cpp"
 
 float x = 0, y = 1, z = 20;
@@ -23,19 +23,6 @@ float delta_move = 0;
 float background[] = {0.47, 0.75, 0.76, 0};
 float ground[] = {0.9, 0.9, 0.9};
 char object = 'c';
-
-GLuint _texture_ground;
-
-// textures
-
-GLuint loadTexture(Image* image) {
-	GLuint textureId;
-	glGenTextures(1, &textureId);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 
-				 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-	return textureId;
-}
 
 // camera
 
@@ -79,28 +66,10 @@ void draw() {
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	// ground
-	
-	Image *picture = loadBMP("ground.bmp");
-	_texture_ground = loadTexture(picture);
-	delete picture;
-	
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _texture_ground);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-	glColor3f(ground[0], ground[1], ground[2]);
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);
-		glVertex3f(-100, 0, -100);
-		glTexCoord2f(0, 100);
-		glVertex3f(-100, 0, 10);
-		glTexCoord2f(100, 100);
-		glVertex3f(100, 0, 100);
-		glTexCoord2f(100, 0);
-		glVertex3f(100, 0, -100);
-	glEnd();
+	Ground *g = new Ground(ground[0], ground[1], ground[2]);
+	delete g;
+	Cottage *c = new Cottage();
+	delete c;
 
 	// cottages
 //	for (int i = -1; i < 1; i++) {
@@ -109,8 +78,8 @@ void draw() {
 //			glTranslatef(i * 5, 0, j * 5);
 //			switch (object) {
 //				case 'c' :
-					Cottage *c = new Cottage();
-					delete c;
+//					Cottage *c = new Cottage();
+//					delete c;
 //					break;
 //				case 't' : teapot();
 //					break;

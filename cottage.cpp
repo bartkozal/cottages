@@ -9,7 +9,6 @@
 
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
-#include <string.h>
 #include "object.cpp"
 
 class Cottage : private Object {
@@ -27,9 +26,11 @@ private:
 	void draw() {
 		glPushMatrix();
 		glScaled(0.8, 0.8, 1.1);
+		glEnable(GL_TEXTURE_2D);
 		this->load_textures();
 		this->draw_roof();
 		this->draw_walls();
+		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glFlush();
 	}

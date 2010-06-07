@@ -16,7 +16,7 @@ class Object {
 	
 protected:
 	
-	GLuint load_texture(const char *name) {
+	virtual GLuint load_texture(const char *name) {
 		Image *texture_image = loadBMP(name);
 		GLuint texture = this->load_texture_from_image(texture_image);
 		delete texture_image;

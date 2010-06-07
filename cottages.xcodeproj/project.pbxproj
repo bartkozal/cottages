@@ -12,6 +12,7 @@
 		CC38252D11BA605200AFED60 /* wall.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252A11BA605200AFED60 /* wall.bmp */; };
 		CC49AE0611BCE58C00261BA1 /* cottage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC49AE0511BCE58C00261BA1 /* cottage.cpp */; };
 		CC49AE6211BCEC5400261BA1 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC49AE6111BCEC5400261BA1 /* object.cpp */; };
+		CC49AF3D11BCF69E00261BA1 /* ground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC49AF3C11BCF69E00261BA1 /* ground.cpp */; };
 		CC5DBF5611B9A91700E375FB /* imageloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC5DBF5411B9A91700E375FB /* imageloader.cpp */; };
 		CCA60B3611B9152700D0477B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3511B9152700D0477B /* GLUT.framework */; };
 		CCA60B3811B9152700D0477B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3711B9152700D0477B /* OpenGL.framework */; };
@@ -24,6 +25,7 @@
 		CC38252A11BA605200AFED60 /* wall.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = wall.bmp; sourceTree = "<group>"; };
 		CC49AE0511BCE58C00261BA1 /* cottage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cottage.cpp; sourceTree = "<group>"; };
 		CC49AE6111BCEC5400261BA1 /* object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cpp; sourceTree = "<group>"; };
+		CC49AF3C11BCF69E00261BA1 /* ground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ground.cpp; sourceTree = "<group>"; };
 		CC5DBF5411B9A91700E375FB /* imageloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imageloader.cpp; sourceTree = "<group>"; };
 		CC5DBF5511B9A91700E375FB /* imageloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageloader.h; sourceTree = "<group>"; };
 		CCA60B2E11B9150F00D0477B /* main.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = main.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +79,7 @@
 				CCA60B3D11B9153400D0477B /* main.cpp */,
 				CC49AE0511BCE58C00261BA1 /* cottage.cpp */,
 				CC49AE6111BCEC5400261BA1 /* object.cpp */,
+				CC49AF3C11BCF69E00261BA1 /* ground.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -148,6 +151,7 @@
 				CC5DBF5611B9A91700E375FB /* imageloader.cpp in Sources */,
 				CC49AE0611BCE58C00261BA1 /* cottage.cpp in Sources */,
 				CC49AE6211BCEC5400261BA1 /* object.cpp in Sources */,
+				CC49AF3D11BCF69E00261BA1 /* ground.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
