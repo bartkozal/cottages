@@ -11,15 +11,13 @@
 #include <OpenGL/OpenGL.h>
 #include "imageloader.h"
 
-class cottage {
+class Cottage {
 	
 public:
 	
-	cottage() {
+	Cottage() {
 		this->draw();
 	}
-	
-	~cottage() {}
 	
 	GLuint texture_wall, texture_roof;
 	

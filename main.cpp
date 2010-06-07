@@ -109,7 +109,7 @@ void draw() {
 //			glTranslatef(i * 5, 0, j * 5);
 //			switch (object) {
 //				case 'c' :
-					cottage *c = new cottage();
+					Cottage *c = new Cottage();
 					delete c;
 //					break;
 //				case 't' : teapot();
