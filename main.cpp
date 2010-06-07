@@ -7,15 +7,13 @@
  *
  */
 
-// Load libs
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
 #include <math.h>
 #include <stdlib.h>
 #include "imageloader.h"
 
-// Load classes
-
+#include "cottage.cpp"
 
 float x = 0, y = 1, z = 20;
 float lx = 0, ly = 0, lz = -1;
@@ -26,7 +24,7 @@ float background[] = {0.47, 0.75, 0.76, 0};
 float ground[] = {0.9, 0.9, 0.9};
 char object = 'c';
 
-GLuint _texture_ground, _texture_wall, _texture_roof;
+GLuint _texture_ground;
 
 // textures
 
@@ -61,93 +59,6 @@ void move(float i) {
 
 // draw
 
-void cottage() {
-
-	glBindTexture(GL_TEXTURE_2D, _texture_wall);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-	glPushMatrix();
-	glScaled(0.8, 0.8, 1.1);
-	// walls
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);
-		glVertex3f(-1, 0, 1);
-		glTexCoord2f(1, 0);
-		glVertex3f(1, 0, 1);
-		glTexCoord2f(1, 1);
-		glVertex3f(1, 1, 1);
-		glTexCoord2f(0, 1);
-		glVertex3f(-1, 1, 1);
-		
-		glTexCoord2f(0, 0);
-		glVertex3f(1, 0, 1);
-		glTexCoord2f(1, 0);
-		glVertex3f(1, 0, -1);
-		glTexCoord2f(1, 1);
-		glVertex3f(1, 1, -1);
-		glTexCoord2f(0, 1);
-		glVertex3f(1, 1, 1);
-
-		glTexCoord2f(0, 0);
-		glVertex3f(1, 0, -1);
-		glTexCoord2f(1, 0);
-		glVertex3f(-1, 0, -1);
-		glTexCoord2f(1, 1);
-		glVertex3f(-1, 1, -1);
-		glTexCoord2f(0, 1);
-		glVertex3f(1, 1, -1);
-	
-		glTexCoord2f(0, 0);
-		glVertex3f(-1, 0, 1);
-		glTexCoord2f(1, 0);
-		glVertex3f(-1, 0, -1);
-		glTexCoord2f(1, 1);
-		glVertex3f(-1, 1, -1);
-		glTexCoord2f(0, 1);
-		glVertex3f(-1, 1, 1);
-	glEnd();
-	// roof
-	
-	glBindTexture(GL_TEXTURE_2D, _texture_roof);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-	glColor3f(1, 1, 1);
-	glBegin(GL_TRIANGLES);
-		glTexCoord2f(0, 0);
-		glVertex3f(-1, 1, 1);
-		glTexCoord2f(5, 0);
-		glVertex3f(1, 1, 1);
-		glTexCoord2f(2.5, 5);
-		glVertex3f(0, 2, 0);
-		
-		glTexCoord2f(0, 0);
-		glVertex3f(1, 1, 1);
-		glTexCoord2f(5, 0);
-		glVertex3f(1, 1, -1);
-		glTexCoord2f(2.5, 5);
-		glVertex3f(0, 2, 0);
-	
-		glTexCoord2f(0, 0);
-		glVertex3f(1, 1, -1);
-		glTexCoord2f(5, 0);
-		glVertex3f(-1, 1, -1);
-		glTexCoord2f(2.5, 5);
-		glVertex3f(0, 2, 0);
-	
-		glTexCoord2f(0, 0);
-		glVertex3f(-1, 1, -1);
-		glTexCoord2f(5, 0);
-		glVertex3f(-1, 1, 1);
-		glTexCoord2f(2.5, 5);
-		glVertex3f(0, 2, 0);
-	glEnd();
-	glPopMatrix();
-	glFlush();
-}
-
 void teapot() {
 	glPushMatrix();
 	glColor3f(0, 1, 0);
@@ -174,14 +85,6 @@ void draw() {
 	_texture_ground = loadTexture(picture);
 	delete picture;
 	
-	Image *picture2 = loadBMP("wall.bmp");
-	_texture_wall = loadTexture(picture2);
-	delete picture2;
-	
-	Image *picture3 = loadBMP("roof.bmp");
-	_texture_roof = loadTexture(picture3);
-	delete picture3;
-	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _texture_ground);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -200,19 +103,21 @@ void draw() {
 	glEnd();
 
 	// cottages
-	for (int i = -2; i < 2; i++) {
-		for (int j = -2; j < 2; j++) {
-			glPushMatrix();
-			glTranslatef(i * 5, 0, j * 5);
-			switch (object) {
-				case 'c' : cottage();
-					break;
-				case 't' : teapot();
-					break;
-			}
-			glPopMatrix();
-		}
-	}
+//	for (int i = -1; i < 1; i++) {
+//		for (int j = -1; j < 1; j++) {
+//			glPushMatrix();
+//			glTranslatef(i * 5, 0, j * 5);
+//			switch (object) {
+//				case 'c' :
+					cottage *c = new cottage();
+					delete c;
+//					break;
+//				case 't' : teapot();
+//					break;
+//			}
+//			glPopMatrix();
+//		}
+//	}
 	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }
