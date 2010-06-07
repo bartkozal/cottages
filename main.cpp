@@ -7,12 +7,15 @@
  *
  */
 
-
+// Load libs
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
 #include <math.h>
 #include <stdlib.h>
 #include "imageloader.h"
+
+// Load classes
+
 
 float x = 0, y = 1, z = 20;
 float lx = 0, ly = 0, lz = -1;

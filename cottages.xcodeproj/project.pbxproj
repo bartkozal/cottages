@@ -10,6 +10,7 @@
 		CC38252B11BA605200AFED60 /* ground.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252811BA605200AFED60 /* ground.bmp */; };
 		CC38252C11BA605200AFED60 /* roof.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252911BA605200AFED60 /* roof.bmp */; };
 		CC38252D11BA605200AFED60 /* wall.bmp in Resources */ = {isa = PBXBuildFile; fileRef = CC38252A11BA605200AFED60 /* wall.bmp */; };
+		CC49AE0611BCE58C00261BA1 /* cottage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC49AE0511BCE58C00261BA1 /* cottage.cpp */; };
 		CC5DBF5611B9A91700E375FB /* imageloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC5DBF5411B9A91700E375FB /* imageloader.cpp */; };
 		CCA60B3611B9152700D0477B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3511B9152700D0477B /* GLUT.framework */; };
 		CCA60B3811B9152700D0477B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3711B9152700D0477B /* OpenGL.framework */; };
@@ -20,6 +21,7 @@
 		CC38252811BA605200AFED60 /* ground.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = ground.bmp; sourceTree = "<group>"; };
 		CC38252911BA605200AFED60 /* roof.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = roof.bmp; sourceTree = "<group>"; };
 		CC38252A11BA605200AFED60 /* wall.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = wall.bmp; sourceTree = "<group>"; };
+		CC49AE0511BCE58C00261BA1 /* cottage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cottage.cpp; sourceTree = "<group>"; };
 		CC5DBF5411B9A91700E375FB /* imageloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imageloader.cpp; sourceTree = "<group>"; };
 		CC5DBF5511B9A91700E375FB /* imageloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageloader.h; sourceTree = "<group>"; };
 		CCA60B2E11B9150F00D0477B /* main.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = main.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +73,7 @@
 				CC38253011BA606900AFED60 /* textures */,
 				CC38255411BA60A500AFED60 /* libs */,
 				CCA60B3D11B9153400D0477B /* main.cpp */,
+				CC49AE0511BCE58C00261BA1 /* cottage.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +143,7 @@
 			files = (
 				CCA60B3E11B9153400D0477B /* main.cpp in Sources */,
 				CC5DBF5611B9A91700E375FB /* imageloader.cpp in Sources */,
+				CC49AE0611BCE58C00261BA1 /* cottage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
