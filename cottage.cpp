@@ -9,9 +9,10 @@
 
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
-#include "imageloader.h"
+#include <string.h>
+#include "object.cpp"
 
-class Cottage {
+class Cottage : private Object {
 	
 public:
 	
@@ -19,18 +20,9 @@ public:
 		this->draw();
 	}
 	
-	GLuint texture_wall, texture_roof;
-	
 private:
 	
-	GLuint loadTexture(Image* image) {
-		GLuint textureId;
-		glGenTextures(1, &textureId);
-		glBindTexture(GL_TEXTURE_2D, textureId);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 
-					 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-		return textureId;
-	}
+	GLuint texture_wall, texture_roof;
 	
 	void draw() {
 		glPushMatrix();
@@ -43,13 +35,8 @@ private:
 	}
 	
 	void load_textures() {
-		Image *texture1 = loadBMP("wall.bmp");
-		this->texture_wall = this->loadTexture(texture1);
-		delete texture1;
-		
-		Image *texture2 = loadBMP("roof.bmp");
-		this->texture_roof = this->loadTexture(texture2);
-		delete texture2;
+		texture_roof = this->load_texture("roof.bmp");
+		texture_wall = this->load_texture("wall.bmp");
 	}
 	
 	void draw_roof() {
