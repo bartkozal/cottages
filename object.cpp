@@ -10,6 +10,7 @@
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
 #include "imageloader.h"
+#include "object.h"
 
 
 class Object {

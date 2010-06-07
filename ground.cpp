@@ -9,7 +9,8 @@
 
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
-#include "object.cpp"
+#include "object.h"
+#include "ground.h"
 
 class Ground : private Object {
 	

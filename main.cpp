@@ -12,8 +12,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "ground.cpp"
-#include "cottage.cpp"
+#include "ground.h"
+#include "cottage.h"
 
 float x = 0, y = 1, z = 20;
 float lx = 0, ly = 0, lz = -1;
