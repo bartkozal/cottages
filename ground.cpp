@@ -9,29 +9,20 @@
 
 #include "ground.h"
 
-Ground::Ground() {
-	this->red = 0.9;
-	this->green = 0.9;
-	this->blue = 0.9;
-	this->draw();
-}
-
 Ground::Ground(float red, float green, float blue) {
 	this->red = red;
 	this->green = green;
 	this->blue = blue;
-	this->draw();
+	this->texture_ground = this->load_texture("ground.bmp");
 }
 	
 void Ground::draw() {
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
-	texture_ground = this->load_texture("ground.bmp");
-	
-	glBindTexture(GL_TEXTURE_2D, texture_ground);
+	glBindTexture(GL_TEXTURE_2D, this->texture_ground);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(red, green, blue);
+	glColor3f(this->red, this->green, this->blue);
 	
 	glBegin(GL_QUADS);
 	
@@ -49,4 +40,10 @@ void Ground::draw() {
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 	glFlush();
+}
+
+void Ground::set_color(float red, float green, float blue) {
+	this->red = red;
+	this->green = green;
+	this->blue = blue;
 }

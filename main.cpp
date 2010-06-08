@@ -11,6 +11,7 @@
 #include <OpenGL/OpenGL.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "ground.h"
 #include "cottage.h"
@@ -21,12 +22,13 @@ float lx = 0, ly = 0, lz = -1;
 float angle = 0, delta_angle = 0;
 float delta_move = 0;
 
-float background[] = {0.47, 0.75, 0.76, 0};
-float ground[] = {0.9, 0.9, 0.9};
-char object = 'c';
+float bred = 0.47, bgreen = 0.75, bblue = 0.76;
+float gred = 0.9, ggreen = 0.9, gblue = 0.9;
+char object;
+
+Ground *ground;
 
 // camera
-
 void orientation(float angle) {
 	lx = sin(angle);
 	lz = -cos(angle);
@@ -35,7 +37,6 @@ void orientation(float angle) {
 			  x + lx, y + ly, z + lz,
 			  0, 1, 0);
 }
-
 void move(float i) {
 	x = x + i * lx * 0.1;
 	z = z + i * lz * 0.1;
@@ -45,6 +46,7 @@ void move(float i) {
 			  0, 1, 0);
 }
 
+// draw
 void draw() {
 	if (delta_move) move(delta_move);
 	if (delta_angle) {
@@ -52,40 +54,18 @@ void draw() {
 		orientation(angle);
 	}
 	
-	glClearColor(background[0], background[1], background[2], background[3]);
+	glClearColor(bred, bgreen, bblue, 1);
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+	ground->draw();
 	
-	Ground *g = new Ground(ground[0], ground[1], ground[2]);
-	delete g;
 	Cottage *c = new Cottage();
 	delete c;
-//	Teapot *t = new Teapot();
-//	delete t;
-
-// cottages
-//	for (int i = -1; i < 1; i++) {
-//		for (int j = -1; j < 1; j++) {
-//			glPushMatrix();
-//			glTranslatef(i * 5, 0, j * 5);
-//			switch (object) {
-//				case 'c' :
-//					Cottage *c = new Cottage();
-//					delete c;
-//					break;
-//				case 't' : teapot();
-//					break;
-//			}
-//			glPopMatrix();
-//		}
-//	}
-	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }
-
 void reshape(int width, int height) {
 	if (height == 0) height = 1;
-	float ratio = width / height;
 	GLfloat light_position[] = { 0, 0, 0, 1 };
 	
 	glMatrixMode(GL_PROJECTION);
@@ -93,7 +73,7 @@ void reshape(int width, int height) {
 	
 	glViewport(0, 0, width, height);
 	
-	gluPerspective(45, ratio, 1, 1000);
+	gluPerspective(45, width/height, 1, 1000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -103,12 +83,12 @@ void reshape(int width, int height) {
 	draw();
 }
 
+// idle/refresh
 void idle() {
 	glutPostRedisplay();
 }
 
 // keyboard
-
 void pressKeys(unsigned char key, int mx, int my) {
 	switch (key) {
 		case 'a' : delta_angle = -0.01;
@@ -121,10 +101,8 @@ void pressKeys(unsigned char key, int mx, int my) {
 			break;
 		case 'q' : exit(0);
 			break;
-
 	}
 }
-
 void releaseKeys(unsigned char key, int mx, int my) {
 	switch (key) {
 		case 'a' :
@@ -137,7 +115,6 @@ void releaseKeys(unsigned char key, int mx, int my) {
 }
 
 // mouse
-
 void motion(int mx, int my) {
 	int relx = 0, rely = 0;
 	int width = glutGet(GLUT_WINDOW_WIDTH);
@@ -149,7 +126,6 @@ void motion(int mx, int my) {
 	delta_move = rely * 0.01;
 	
 }
-
 void mouse(int button, int state, int mx, int my) {
 	if (button == GLUT_LEFT_BUTTON and state == GLUT_UP) {
 		delta_angle = 0;
@@ -157,28 +133,36 @@ void mouse(int button, int state, int mx, int my) {
 	}
 }
 
-void ground_color(int option) {
+// menu
+void change_ground_color(int option) {
 	switch (option) {
-		case 1 : ground[0] = 1; ground[1] = 0; ground[2] = 0;
-			break;                                           
-		case 2 : ground[0] = 0; ground[1] = 1; ground[2] = 0;
-			break;                                           
-		case 3 : ground[0] = 0; ground[1] = 0; ground[2] = 1;
+		case 1: 
+			ground->set_color(1, 0, 0);
+			break;
+		case 2: 
+			ground->set_color(0, 1, 0);
+			break;
+		case 3:
+			ground->set_color(0, 0, 1);
+			break;
+		case 4:
+			ground->set_color(0.9, 0.9, 0.9);
 			break;
 	}
 }
-void background_color(int option) {
+void change_background_color(int option) {
 	switch (option) {
-		case 1 : background[0] = 1; background[1] = 0; background[2] = 0; background[3] = 1;
+		case 1 : bred = 1; bgreen = 0; bblue = 0;
 			break;
-		case 2 : background[0] = 0; background[1] = 1; background[2] = 0; background[3] = 1;
+		case 2 : bred = 0; bgreen = 1; bblue = 0;
 			break;
-		case 3 : background[0] = 0; background[1] = 0; background[2] = 1; background[3] = 1;
+		case 3 : bred = 0; bgreen = 0; bblue = 1;
+			break;
+		case 4 : bred = 0.47; bgreen = 0.75; bblue = 0.76;
 			break;
 	}
 }
-
-void shape (int option) {
+void change_shape (int option) {
 	switch (option) {
 		case 1 : object = 'c';
 			break;
@@ -186,28 +170,27 @@ void shape (int option) {
 			break;
 	}
 }
-
-// menu
-void createMenu() {
-	int submenu1 = glutCreateMenu(ground_color);
-	int submenu2 = glutCreateMenu(background_color);
-	int submenu3 = glutCreateMenu(shape);
+void init_menu() {
+	int submenu1 = glutCreateMenu(change_ground_color);
+	int submenu2 = glutCreateMenu(change_background_color);
+	int submenu3 = glutCreateMenu(change_shape);
 	
 	glutSetMenu(submenu1);
 	glutAddMenuEntry("Red", 1);
 	glutAddMenuEntry("Green", 2);
 	glutAddMenuEntry("Blue", 3);
+	glutAddMenuEntry("Reset", 4);
 	glutSetMenu(submenu2);
 	glutAddMenuEntry("Red", 1);
 	glutAddMenuEntry("Green", 2);
 	glutAddMenuEntry("Blue", 3);
+	glutAddMenuEntry("Reset", 4);
 	glutSetMenu(submenu3);
 	glutAddMenuEntry("Cottage", 1);
 	glutAddMenuEntry("Teapot", 2);
-	glutCreateMenu(shape);
-	glutCreateMenu(ground_color);
-	glutCreateMenu(background_color);
-	glutCreateMenu(shape);
+	glutCreateMenu(change_ground_color);
+	glutCreateMenu(change_background_color);
+	glutCreateMenu(change_shape);
 	glutAddSubMenu("Ground color", submenu1);
 	glutAddSubMenu("Background color", submenu2);
 	glutAddSubMenu("Shape", submenu3);
@@ -215,23 +198,31 @@ void createMenu() {
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
-void lighting() {
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_NORMALIZE);
+// objects
+void init_objects() {
+	ground = new Ground(gred, ggreen, gblue);
 }
 
+// lights
+void init_lights() {
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+}
 
 // main
-
 int main(int argc, char *argv[]) {
+	
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(300, 300);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow("Cottages");
-	lighting();
-	createMenu();
+	
+	init_menu();
+	init_objects();
+	//	init_lights();
+	
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(draw);
 	glutIdleFunc(idle);
@@ -240,5 +231,8 @@ int main(int argc, char *argv[]) {
 	glutMotionFunc(motion);
 	glutMouseFunc(mouse);
 	glutMainLoop();
+
+	delete ground;
 	return 0;
+	
 }

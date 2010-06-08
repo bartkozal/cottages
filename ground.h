@@ -20,13 +20,13 @@ public:
 	
 	Ground();
 	Ground(float red, float green, float blue);
+	void draw();
+	void set_color(float red, float green, float blue);
 	
 private:
 	
-	int red, green, blue;
+	float red, green, blue;
 	GLuint texture_ground;
-	
-	void draw();
 	
 };
 
