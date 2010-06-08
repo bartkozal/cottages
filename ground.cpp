@@ -29,7 +29,7 @@ void Ground::draw() {
 	glTexCoord2f(0, 0);
 	glVertex3f(-100, 0, -100);
 	glTexCoord2f(0, 100);
-	glVertex3f(-100, 0, 10);
+	glVertex3f(-100, 0, 100);
 	glTexCoord2f(100, 100);
 	glVertex3f(100, 0, 100);
 	glTexCoord2f(100, 0);

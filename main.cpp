@@ -16,8 +16,9 @@
 #include "ground.h"
 #include "cottage.h"
 #include "diamond.h"
+#include "lamp.h"
 
-float x = 0, y = 1, z = 20;
+float x = 0, y = 1.5, z = 20;
 float lx = 0, ly = 0, lz = -1;
 float angle = 0, delta_angle = 0;
 float delta_move = 0;
@@ -26,9 +27,12 @@ float bred = 0.47, bgreen = 0.75, bblue = 0.76;
 float gred = 0.9, ggreen = 0.9, gblue = 0.9;
 char object = 'c';
 
+int city_size = 3;
+
 Ground *ground;
 Cottage *cottage;
 Diamond *diamond;
+Lamp *lamp;
 
 // camera
 void orientation(float angle) {
@@ -59,10 +63,13 @@ void draw() {
 	glClearColor(bred, bgreen, bblue, 1);
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+	
+	// ground
 	ground->draw();
-	for (int i = -3; i < 3; i++) {
-		for (int j = -3; j < 3; j++) {
+	
+	// objects
+	for (int i = -city_size; i < city_size; i++) {
+		for (int j = -city_size; j < city_size; j++) {
 			glPushMatrix();
 			glTranslatef(i * 5, 0, j * 5);
 			switch (object) {
@@ -73,6 +80,16 @@ void draw() {
 					diamond->draw();
 					break;
 			}
+			glPopMatrix();
+		}
+	}
+	
+	// lamps
+	for (int i = -city_size; i < city_size-1; i++) {
+		for (int j = -city_size+1; j < city_size-1; j++) {
+			glPushMatrix();
+			glTranslatef(i * 5 + 2.5, 0, j * 7.5);
+			lamp->draw();
 			glPopMatrix();
 		}
 	}
@@ -125,7 +142,11 @@ void releaseKeys(unsigned char key, int mx, int my) {
 			break;
 		case 'w' :
 		case 's' : delta_move = 0;
-			break;	
+			break;
+		case 'z' : city_size += 1;
+			break;
+		case 'x' : if (city_size != 1) city_size -= 1;
+			break;
 	}
 }
 
@@ -220,6 +241,7 @@ void init_objects() {
 	ground = new Ground(gred, ggreen, gblue);
 	cottage = new Cottage();
 	diamond = new Diamond();
+	lamp = new Lamp();
 }
 void init_lights() {
     glEnable(GL_LIGHTING);

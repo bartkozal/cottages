@@ -18,6 +18,7 @@
 		CCA60B3811B9152700D0477B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3711B9152700D0477B /* OpenGL.framework */; };
 		CCA60B3E11B9153400D0477B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCA60B3D11B9153400D0477B /* main.cpp */; };
 		CCB5B31011BED1B700A23607 /* diamond.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCB5B30F11BED1B700A23607 /* diamond.cpp */; };
+		CCB5B34B11BED46500A23607 /* lamp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCB5B34A11BED46500A23607 /* lamp.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		CCA60B3D11B9153400D0477B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CCB5B30E11BED1B700A23607 /* diamond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diamond.h; sourceTree = "<group>"; };
 		CCB5B30F11BED1B700A23607 /* diamond.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = diamond.cpp; sourceTree = "<group>"; };
+		CCB5B34911BED46500A23607 /* lamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lamp.h; sourceTree = "<group>"; };
+		CCB5B34A11BED46500A23607 /* lamp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lamp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,17 +83,12 @@
 		CCA60B1B11B914F200D0477B = {
 			isa = PBXGroup;
 			children = (
-				CC38253011BA606900AFED60 /* textures */,
 				CC38255411BA60A500AFED60 /* libs */,
+				CC38253011BA606900AFED60 /* textures */,
+				CCB5B34411BED3DE00A23607 /* objects */,
 				CCA60B3D11B9153400D0477B /* main.cpp */,
 				CC49AF7E11BCFCD800261BA1 /* object.h */,
 				CC49AF7F11BCFCD800261BA1 /* object.cpp */,
-				CC49AF8111BCFCF500261BA1 /* ground.h */,
-				CC49AF8211BCFCF500261BA1 /* ground.cpp */,
-				CC49AF8411BCFD0C00261BA1 /* cottage.h */,
-				CC49AF8511BCFD0C00261BA1 /* cottage.cpp */,
-				CCB5B30E11BED1B700A23607 /* diamond.h */,
-				CCB5B30F11BED1B700A23607 /* diamond.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +98,21 @@
 				CCA60B2E11B9150F00D0477B /* main.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CCB5B34411BED3DE00A23607 /* objects */ = {
+			isa = PBXGroup;
+			children = (
+				CC49AF8111BCFCF500261BA1 /* ground.h */,
+				CC49AF8211BCFCF500261BA1 /* ground.cpp */,
+				CC49AF8411BCFD0C00261BA1 /* cottage.h */,
+				CC49AF8511BCFD0C00261BA1 /* cottage.cpp */,
+				CCB5B30E11BED1B700A23607 /* diamond.h */,
+				CCB5B30F11BED1B700A23607 /* diamond.cpp */,
+				CCB5B34911BED46500A23607 /* lamp.h */,
+				CCB5B34A11BED46500A23607 /* lamp.cpp */,
+			);
+			name = objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +177,7 @@
 				CC49AF8311BCFCF500261BA1 /* ground.cpp in Sources */,
 				CC49AF8611BCFD0C00261BA1 /* cottage.cpp in Sources */,
 				CCB5B31011BED1B700A23607 /* diamond.cpp in Sources */,
+				CCB5B34B11BED46500A23607 /* lamp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
