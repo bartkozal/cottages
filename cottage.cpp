@@ -37,13 +37,15 @@ void Cottage::draw_roof() {
 	
 	glBegin(GL_TRIANGLES);
 	
+	glNormal3f(0, 1, 1);
 	glTexCoord2f(0, 0);
 	glVertex3f(-1, 1, 1);
 	glTexCoord2f(5, 0);
 	glVertex3f(1, 1, 1);
 	glTexCoord2f(2.5, 5);
 	glVertex3f(0, 2, 0);
-	
+
+	glNormal3f(1, 1, 0);
 	glTexCoord2f(0, 0);
 	glVertex3f(1, 1, 1);
 	glTexCoord2f(5, 0);
@@ -51,13 +53,15 @@ void Cottage::draw_roof() {
 	glTexCoord2f(2.5, 5);
 	glVertex3f(0, 2, 0);
 	
+	glNormal3f(0, 1, -1);
 	glTexCoord2f(0, 0);
 	glVertex3f(1, 1, -1);
 	glTexCoord2f(5, 0);
 	glVertex3f(-1, 1, -1);
 	glTexCoord2f(2.5, 5);
 	glVertex3f(0, 2, 0);
-	
+
+	glNormal3f(-1, 1, 0);
 	glTexCoord2f(0, 0);
 	glVertex3f(-1, 1, -1);
 	glTexCoord2f(5, 0);
@@ -77,6 +81,7 @@ void Cottage::draw_walls() {
 	
 	glBegin(GL_QUADS);
 	
+	glNormal3f(0, 0, 1);
 	glTexCoord2f(0, 0);
 	glVertex3f(-1, 0, 1);
 	glTexCoord2f(1, 0);
@@ -85,7 +90,8 @@ void Cottage::draw_walls() {
 	glVertex3f(1, 1, 1);
 	glTexCoord2f(0, 1);
 	glVertex3f(-1, 1, 1);
-	
+
+	glNormal3f(1, 0, 0);
 	glTexCoord2f(0, 0);
 	glVertex3f(1, 0, 1);
 	glTexCoord2f(1, 0);
@@ -95,6 +101,7 @@ void Cottage::draw_walls() {
 	glTexCoord2f(0, 1);
 	glVertex3f(1, 1, 1);
 	
+	glNormal3f(0, 0, -1);
 	glTexCoord2f(0, 0);
 	glVertex3f(1, 0, -1);
 	glTexCoord2f(1, 0);
@@ -104,6 +111,7 @@ void Cottage::draw_walls() {
 	glTexCoord2f(0, 1);
 	glVertex3f(1, 1, -1);
 	
+	glNormal3f(-1, 0, 0);
 	glTexCoord2f(0, 0);
 	glVertex3f(-1, 0, 1);
 	glTexCoord2f(1, 0);

@@ -23,11 +23,13 @@ float lx = 0, ly = 0, lz = -1;
 float angle = 0, delta_angle = 0;
 float delta_move = 0;
 
-float bred = 0.47, bgreen = 0.75, bblue = 0.76;
+float bred = 0, bgreen = 0.15, bblue = 0.15;
 float gred = 0.9, ggreen = 0.9, gblue = 0.9;
 char object = 'c';
 
-int city_size = 3;
+int city_size = 2;
+bool light_lamps_1 = false;
+bool light_lamps_2 = false;
 
 Ground *ground;
 Cottage *cottage;
@@ -85,20 +87,33 @@ void draw() {
 	}
 	
 	// lamps
-	for (int i = -city_size; i < city_size-1; i++) {
-		for (int j = -city_size+1; j < city_size-1; j++) {
+	float light_position_0[] = {-7.5, 1, -7.5, 1};
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position_0);
+	float light_position_1[] = {-7.5, 1, 0, 1};
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position_1);
+	float light_position_2[] = {-2.5, 1, -7.5, 1};
+	glLightfv(GL_LIGHT2, GL_POSITION, light_position_2);
+	float light_position_3[] = {-2.5, 1, 0, 1};
+	glLightfv(GL_LIGHT3, GL_POSITION, light_position_3);
+	float light_position_4[] = {2.5, 1, -7.5, 1};
+	glLightfv(GL_LIGHT4, GL_POSITION, light_position_4);
+	float light_position_5[] = {2.5, 1, 0, 1};
+	glLightfv(GL_LIGHT5, GL_POSITION, light_position_5);
+	float light_position_6[] = {10, 10, 10, 1};
+	glLightfv(GL_LIGHT6, GL_POSITION, light_position_6);
+	for (int i = -2; i < 1; i++) {
+		for (int j = -1; j < 1; j++) {
 			glPushMatrix();
 			glTranslatef(i * 5 + 2.5, 0, j * 7.5);
 			lamp->draw();
 			glPopMatrix();
 		}
 	}
-	
+
 	glutSwapBuffers();
 }
 void reshape(int width, int height) {
 	if (height == 0) height = 1;
-	GLfloat light_position[] = { 0, 0, 0, 1 };
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -108,7 +123,6 @@ void reshape(int width, int height) {
 	gluPerspective(45, width/height, 1, 1000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	gluLookAt(x, y, z,
 			  x + lx, y + ly, z + lz,
 			  0, 1, 0);
@@ -145,7 +159,35 @@ void releaseKeys(unsigned char key, int mx, int my) {
 			break;
 		case 'z' : city_size += 1;
 			break;
-		case 'x' : if (city_size != 1) city_size -= 1;
+		case 'x' : if (city_size != 2) city_size -= 1;
+			break;
+		case '1' :
+			if (light_lamps_1 == true) {
+				glDisable(GL_LIGHT0);
+				glDisable(GL_LIGHT1);
+				glDisable(GL_LIGHT2);
+				glDisable(GL_LIGHT3);
+				glDisable(GL_LIGHT4);
+				glDisable(GL_LIGHT5);
+				light_lamps_1 = false;
+			} else {
+				glEnable(GL_LIGHT0);
+				glEnable(GL_LIGHT1);
+				glEnable(GL_LIGHT2);
+				glEnable(GL_LIGHT3);
+				glEnable(GL_LIGHT4);
+				glEnable(GL_LIGHT5);
+				light_lamps_1 = true;
+			}
+			break;
+		case '2' :
+			if (light_lamps_2 == true) {
+				glDisable(GL_LIGHT6);
+				light_lamps_2 = false;
+			} else {
+				glEnable(GL_LIGHT6);
+				light_lamps_2 = true;
+			}
 			break;
 	}
 }
@@ -194,7 +236,7 @@ void change_background_color(int option) {
 			break;
 		case 3 : bred = 0; bgreen = 0; bblue = 1;
 			break;
-		case 4 : bred = 0.47; bgreen = 0.75; bblue = 0.76;
+		case 4 : bred = 0; bgreen = 0.15; bblue = 0.15;
 			break;
 	}
 }
@@ -244,14 +286,41 @@ void init_objects() {
 	lamp = new Lamp();
 }
 void init_lights() {
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHTING);
+	
+	float light_ambient_1[] = {0.1, 0.1, 0.0, 1};
+	float light_diffuse_1[] = {0.6, 0.6, 0.5, 1};
+	float light_specular_1[] = {0.1, 0, 0.1, 1};
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient_1);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse_1);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular_1);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient_1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse_1);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular_1);
+	glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient_1);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse_1);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular_1);
+	glLightfv(GL_LIGHT3, GL_AMBIENT, light_ambient_1);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse_1);
+	glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular_1);
+	glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient_1);
+	glLightfv(GL_LIGHT4, GL_DIFFUSE, light_diffuse_1);
+	glLightfv(GL_LIGHT4, GL_SPECULAR, light_specular_1);
+	glLightfv(GL_LIGHT5, GL_AMBIENT, light_ambient_1);
+	glLightfv(GL_LIGHT5, GL_DIFFUSE, light_diffuse_1);
+	glLightfv(GL_LIGHT5, GL_SPECULAR, light_specular_1);
+	
+	float light_ambient_2[] = {0.9, 0.9, 0.8, 1};
+	float light_diffuse_2[] = {0.6, 0.6, 0.5, 1};
+	float light_specular_2[] = {0.8, 0.7, 0.8, 1};
+	glLightfv(GL_LIGHT6, GL_AMBIENT, light_ambient_2);
+	glLightfv(GL_LIGHT6, GL_DIFFUSE, light_diffuse_2);
+	glLightfv(GL_LIGHT6, GL_SPECULAR, light_specular_2);
+	
 }
 
 // main
 int main(int argc, char *argv[]) {
-	
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(300, 300);
@@ -260,7 +329,7 @@ int main(int argc, char *argv[]) {
 	
 	init_menu();
 	init_objects();
-	//init_lights();
+	init_lights();
 	
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(draw);
