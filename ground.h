@@ -27,7 +27,6 @@ private:
 	GLuint texture_ground;
 	
 	void draw();
-	void draw_ground();
 	
 };
 

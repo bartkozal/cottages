@@ -14,6 +14,7 @@
 
 #include "ground.h"
 #include "cottage.h"
+#include "teapot.h"
 
 float x = 0, y = 1, z = 20;
 float lx = 0, ly = 0, lz = -1;
@@ -44,17 +45,6 @@ void move(float i) {
 			  0, 1, 0);
 }
 
-// draw
-
-void teapot() {
-	glPushMatrix();
-	glColor3f(0, 1, 0);
-	glTranslatef(0, 1, 0);
-	glutSolidTeapot(1);
-	glPopMatrix();
-	glFlush();
-}
-
 void draw() {
 	if (delta_move) move(delta_move);
 	if (delta_angle) {
@@ -70,6 +60,8 @@ void draw() {
 	delete g;
 	Cottage *c = new Cottage();
 	delete c;
+//	Teapot *t = new Teapot();
+//	delete t;
 
 // cottages
 //	for (int i = -1; i < 1; i++) {

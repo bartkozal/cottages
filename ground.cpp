@@ -27,13 +27,7 @@ void Ground::draw() {
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 	texture_ground = this->load_texture("ground.bmp");
-	this->draw_ground();
-	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-	glFlush();
-}
-
-void Ground::draw_ground() {
+	
 	glBindTexture(GL_TEXTURE_2D, texture_ground);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -51,4 +45,8 @@ void Ground::draw_ground() {
 	glVertex3f(100, 0, -100);
 	
 	glEnd();
+	
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+	glFlush();
 }
