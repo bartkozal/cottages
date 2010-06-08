@@ -1,5 +1,5 @@
 /*
- *  teapot.cpp
+ *  diamonds.cpp
  *  cottages
  *
  *  Created by Bartlomiej Kozal on 08/06/2010.
@@ -7,18 +7,16 @@
  *
  */
 
-#include "teapot.h"
+#include "diamond.h"
 
-Teapot::Teapot() {
-	this->draw();
-}
+Diamond::Diamond() {}
 
-void Teapot::draw() {
+void Diamond::draw() {
 	glPushMatrix();
-
-	glColor3f(0, 1, 0);
+	
+	glColor3f(0, 0, 1);
 	glTranslatef(0, 1, 0);
-	glutSolidTeapot(1);
+	glutSolidOctahedron();
 	
 	glPopMatrix();
 	glFlush();

@@ -19,12 +19,12 @@ class Cottage : private Object {
 public:
 	
 	Cottage();
+	void draw();
 	
 private:
 	
 	GLuint texture_wall, texture_roof;
-	
-	void draw();	
+		
 	void load_textures();	
 	void draw_roof();	
 	void draw_walls();

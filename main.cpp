@@ -15,7 +15,7 @@
 
 #include "ground.h"
 #include "cottage.h"
-#include "teapot.h"
+#include "diamond.h"
 
 float x = 0, y = 1, z = 20;
 float lx = 0, ly = 0, lz = -1;
@@ -24,9 +24,11 @@ float delta_move = 0;
 
 float bred = 0.47, bgreen = 0.75, bblue = 0.76;
 float gred = 0.9, ggreen = 0.9, gblue = 0.9;
-char object;
+char object = 'c';
 
 Ground *ground;
+Cottage *cottage;
+Diamond *diamond;
 
 // camera
 void orientation(float angle) {
@@ -59,9 +61,22 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 	ground->draw();
+	for (int i = -3; i < 3; i++) {
+		for (int j = -3; j < 3; j++) {
+			glPushMatrix();
+			glTranslatef(i * 5, 0, j * 5);
+			switch (object) {
+				case 'c':
+					cottage->draw();
+					break;
+				case 'd':
+					diamond->draw();
+					break;
+			}
+			glPopMatrix();
+		}
+	}
 	
-	Cottage *c = new Cottage();
-	delete c;
 	glutSwapBuffers();
 }
 void reshape(int width, int height) {
@@ -164,12 +179,16 @@ void change_background_color(int option) {
 }
 void change_shape (int option) {
 	switch (option) {
-		case 1 : object = 'c';
+		case 1: 
+			object = 'c';
 			break;
-		case 2 : object = 't';
+		case 2: 
+			object = 'd';
 			break;
 	}
 }
+
+// inits - menu, objects, lights
 void init_menu() {
 	int submenu1 = glutCreateMenu(change_ground_color);
 	int submenu2 = glutCreateMenu(change_background_color);
@@ -187,7 +206,7 @@ void init_menu() {
 	glutAddMenuEntry("Reset", 4);
 	glutSetMenu(submenu3);
 	glutAddMenuEntry("Cottage", 1);
-	glutAddMenuEntry("Teapot", 2);
+	glutAddMenuEntry("Diamonds", 2);
 	glutCreateMenu(change_ground_color);
 	glutCreateMenu(change_background_color);
 	glutCreateMenu(change_shape);
@@ -197,13 +216,11 @@ void init_menu() {
 	
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
-
-// objects
 void init_objects() {
 	ground = new Ground(gred, ggreen, gblue);
+	cottage = new Cottage();
+	diamond = new Diamond();
 }
-
-// lights
 void init_lights() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -221,7 +238,7 @@ int main(int argc, char *argv[]) {
 	
 	init_menu();
 	init_objects();
-	//	init_lights();
+	//init_lights();
 	
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(draw);

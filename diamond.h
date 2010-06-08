@@ -1,5 +1,5 @@
 /*
- *  teapot.h
+ *  diamonds.h
  *  cottages
  *
  *  Created by Bartlomiej Kozal on 08/06/2010.
@@ -7,21 +7,18 @@
  *
  */
 
-#ifndef TEAPOT
-#define TEAPOT
+#ifndef DIAMOND
+#define DIAMOND
 
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
 #include "object.h"
 
-class Teapot : private Object {
+class Diamond : private Object {
 	
 public:
 	
-	Teapot();
-	
-private:
-	
+	Diamond();
 	void draw();
 	
 };

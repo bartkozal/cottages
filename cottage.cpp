@@ -10,14 +10,13 @@
 #include "cottage.h"
 
 Cottage::Cottage() {
-	this->draw();
+	this->load_textures();
 }
 
 void Cottage::draw() {
 	glPushMatrix();
 	glScaled(0.8, 0.8, 1.1);
 	glEnable(GL_TEXTURE_2D);
-	this->load_textures();
 	this->draw_roof();
 	this->draw_walls();
 	glDisable(GL_TEXTURE_2D);

@@ -17,7 +17,7 @@
 		CCA60B3611B9152700D0477B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3511B9152700D0477B /* GLUT.framework */; };
 		CCA60B3811B9152700D0477B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA60B3711B9152700D0477B /* OpenGL.framework */; };
 		CCA60B3E11B9153400D0477B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCA60B3D11B9153400D0477B /* main.cpp */; };
-		CCB5B12C11BEAB7000A23607 /* teapot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCB5B12B11BEAB7000A23607 /* teapot.cpp */; };
+		CCB5B31011BED1B700A23607 /* diamond.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCB5B30F11BED1B700A23607 /* diamond.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,8 +37,8 @@
 		CCA60B3511B9152700D0477B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		CCA60B3711B9152700D0477B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CCA60B3D11B9153400D0477B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		CCB5B12A11BEAB7000A23607 /* teapot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teapot.h; sourceTree = "<group>"; };
-		CCB5B12B11BEAB7000A23607 /* teapot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = teapot.cpp; sourceTree = "<group>"; };
+		CCB5B30E11BED1B700A23607 /* diamond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diamond.h; sourceTree = "<group>"; };
+		CCB5B30F11BED1B700A23607 /* diamond.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = diamond.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,8 +89,8 @@
 				CC49AF8211BCFCF500261BA1 /* ground.cpp */,
 				CC49AF8411BCFD0C00261BA1 /* cottage.h */,
 				CC49AF8511BCFD0C00261BA1 /* cottage.cpp */,
-				CCB5B12A11BEAB7000A23607 /* teapot.h */,
-				CCB5B12B11BEAB7000A23607 /* teapot.cpp */,
+				CCB5B30E11BED1B700A23607 /* diamond.h */,
+				CCB5B30F11BED1B700A23607 /* diamond.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,7 +163,7 @@
 				CC49AF8011BCFCD800261BA1 /* object.cpp in Sources */,
 				CC49AF8311BCFCF500261BA1 /* ground.cpp in Sources */,
 				CC49AF8611BCFD0C00261BA1 /* cottage.cpp in Sources */,
-				CCB5B12C11BEAB7000A23607 /* teapot.cpp in Sources */,
+				CCB5B31011BED1B700A23607 /* diamond.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
