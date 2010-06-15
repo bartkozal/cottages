@@ -32,6 +32,11 @@ bool light_lamps_1 = false;
 bool light_lamps_2 = false;
 bool texture_switch = true;
 bool texture_linear = true;
+bool go_left = true;
+bool go_backword = true;
+
+float spot_direction_x = 0;
+float spot_direction_z = 0;
 
 Ground *ground;
 Cottage *cottage;
@@ -114,7 +119,7 @@ void draw() {
 	// lights
 	
 	float light_position_6[] = {2, 10, 2, 1};
-	float spot_direction_6[] = {0, -5, 0};
+	float spot_direction_6[] = {spot_direction_x, -5, spot_direction_z};
 	glLightfv(GL_LIGHT6, GL_POSITION, light_position_6);
 	glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, spot_direction_6);
 
@@ -139,6 +144,26 @@ void reshape(int width, int height) {
 
 // idle/refresh
 void idle() {
+	if (go_left == true && spot_direction_x > -5) {
+		spot_direction_x -= 0.05;
+	} else if (go_left == true) {
+		go_left = false;
+	} else if (go_left == false && spot_direction_x < 0) {
+		spot_direction_x += 0.05;
+	} else if (go_left == false) {
+		go_left = true;
+	}
+	
+	if (go_backword == true && spot_direction_z > -5) {
+		spot_direction_z -= 0.02;
+	} else if (go_backword == true) {
+		go_backword = false;
+	} else if (go_backword == false && spot_direction_z < 0) {
+		spot_direction_z += 0.02;
+	} else if (go_backword == false) {
+		go_backword = true;
+	}
+	
 	glutPostRedisplay();
 }
 
