@@ -20,7 +20,7 @@ public:
 	
 	Ground();
 	Ground(float red, float green, float blue);
-	void draw();
+	void draw(bool texture_switch, bool texture_linear);
 	void set_color(float red, float green, float blue);
 	
 private:

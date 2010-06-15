@@ -19,15 +19,15 @@ class Cottage : private Object {
 public:
 	
 	Cottage();
-	void draw();
+	void draw(bool texture_switch, bool texture_linear);
 	
 private:
 	
 	GLuint texture_wall, texture_roof;
 		
 	void load_textures();	
-	void draw_roof();	
-	void draw_walls();
+	void draw_roof(bool texture_linear);	
+	void draw_walls(bool texture_linear);
 
 };
 

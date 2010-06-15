@@ -16,48 +16,58 @@ Ground::Ground(float red, float green, float blue) {
 	this->texture_ground = this->load_texture("ground.bmp");
 }
 	
-void Ground::draw() {
+void Ground::draw(bool texture_switch, bool texture_linear) {
 	
 	glPushMatrix();
 	
-//	float mat_ambient[] = {1, 1, 1, 1};
-//	float mat_diffuse[] = {1, 1, 1, 1};
-//	float mat_specular[] = {1, 1, 1, 1};
-//	float high_shininess[] = {1};
+	float mat_ambient[] = {this->red, this->green, this->blue};
+	float mat_diffuse[] = {0.5, 0.5, 0.5, 1};
+	float mat_specular[] = {0, 0, 0, 0};
+	float high_shininess[] = {0};
 	
-	glEnable(GL_TEXTURE_2D);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient); 
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+	
+	if (texture_switch == true) {
+		glEnable(GL_TEXTURE_2D);
+	}
+	
 	glBindTexture(GL_TEXTURE_2D, this->texture_ground);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-	glColor3f(this->red, this->green, this->blue);
-	
-//	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient); 
-//	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
-//	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-//	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-	
-	glBegin(GL_QUADS);
 
-	glTexCoord2f(0, 0);
-	glVertex3f(-100, 0, -100);
-	glTexCoord2f(0, 100);
-	glVertex3f(-100, 0, 100);
-	glTexCoord2f(100, 100);
-	glVertex3f(100, 0, 100);
-	glTexCoord2f(100, 0);
-	glVertex3f(100, 0, -100);
+	if (texture_linear == true) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	} else {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
 	
-	glEnd();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexGeni(GL_S,GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+    glEnable(GL_TEXTURE_GEN_S);
+    glEnable(GL_TEXTURE_GEN_T);
+	
+	glPushMatrix();
+	GLUquadricObj * su = gluNewQuadric();
+	glRotatef(-90, 1, 0, 0);
+	gluDisk(su, 0, 100, 50, 50);
+	glPopMatrix();
+	
+	glDisable(GL_TEXTURE_GEN_S);
+	glDisable(GL_TEXTURE_GEN_T);
 	
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
-	glFlush();
+
 }
 
 void Ground::set_color(float red, float green, float blue) {
 	this->red = red;
 	this->green = green;
 	this->blue = blue;
-	this->draw();
+	this->draw(true, true);
 }

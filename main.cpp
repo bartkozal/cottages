@@ -24,12 +24,14 @@ float angle = 0, delta_angle = 0;
 float delta_move = 0;
 
 float bred = 0, bgreen = 0.15, bblue = 0.15;
-float gred = 0.9, ggreen = 0.9, gblue = 0.9;
+float gred = 0, ggreen = 0, gblue = 0;
 char object = 'c';
 
 int city_size = 2;
 bool light_lamps_1 = false;
 bool light_lamps_2 = false;
+bool texture_switch = true;
+bool texture_linear = true;
 
 Ground *ground;
 Cottage *cottage;
@@ -67,7 +69,7 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// ground
-	ground->draw();
+	ground->draw(texture_switch, texture_linear);
 	
 	// objects
 	for (int i = -city_size; i < city_size; i++) {
@@ -76,7 +78,7 @@ void draw() {
 			glTranslatef(i * 5, 0, j * 5);
 			switch (object) {
 				case 'c':
-					cottage->draw();
+					cottage->draw(texture_switch, texture_linear);
 					break;
 				case 'd':
 					diamond->draw();
@@ -87,6 +89,15 @@ void draw() {
 	}
 	
 	// lamps
+	for (int i = -2; i < 1; i++) {
+		for (int j = -1; j < 1; j++) {
+			glPushMatrix();
+			glTranslatef(i * 5 + 2.5, 0, j * 7.5);
+			lamp->draw();
+			glPopMatrix();
+		}
+	}
+	
 	float light_position_0[] = {-7.5, 1, -7.5, 1};
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position_0);
 	float light_position_1[] = {-7.5, 1, 0, 1};
@@ -99,16 +110,13 @@ void draw() {
 	glLightfv(GL_LIGHT4, GL_POSITION, light_position_4);
 	float light_position_5[] = {2.5, 1, 0, 1};
 	glLightfv(GL_LIGHT5, GL_POSITION, light_position_5);
-	float light_position_6[] = {4, 4, -4, 1};
+	
+	// lights
+	
+	float light_position_6[] = {2, 10, 2, 1};
+	float spot_direction_6[] = {0, -5, 0};
 	glLightfv(GL_LIGHT6, GL_POSITION, light_position_6);
-	for (int i = -2; i < 1; i++) {
-		for (int j = -1; j < 1; j++) {
-			glPushMatrix();
-			glTranslatef(i * 5 + 2.5, 0, j * 7.5);
-			lamp->draw();
-			glPopMatrix();
-		}
-	}
+	glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, spot_direction_6);
 
 	glutSwapBuffers();
 }
@@ -147,7 +155,6 @@ void pressSpecialKeys(int key, int kx, int ky) {
 			break;
 	}
 }
-
 void releaseSpecialKeys(int key, int kx, int ky) {
 	switch (key) {
 		case GLUT_KEY_LEFT :
@@ -158,7 +165,6 @@ void releaseSpecialKeys(int key, int kx, int ky) {
 			break;
 	}
 }
-
 void releaseKeys(unsigned char key, int kx, int ky) {
 	switch (key) {
 		case 'q' : exit(0);
@@ -166,6 +172,10 @@ void releaseKeys(unsigned char key, int kx, int ky) {
 		case 'a' : city_size += 1;
 			break;
 		case 's' : if (city_size != 2) city_size -= 1;
+			break;
+		case 'z' : texture_switch == true ? texture_switch = false : texture_switch = true;
+			break;
+		case 'x' : texture_linear == true ? texture_linear = false : texture_linear = true;
 			break;
 		case '1' :
 			if (light_lamps_1 == true) {
@@ -230,7 +240,7 @@ void change_ground_color(int option) {
 			ground->set_color(0, 0, 1);
 			break;
 		case 4:
-			ground->set_color(0.9, 0.9, 0.9);
+			ground->set_color(gred, ggreen, gblue);
 			break;
 	}
 }
@@ -293,35 +303,46 @@ void init_objects() {
 }
 void init_lights() {
 	glEnable(GL_LIGHTING);
-	
-	float light_ambient_1[] = {0.1, 0.1, 0.0, 1};
-	float light_diffuse_1[] = {0.6, 0.6, 0.5, 1};
-	float light_specular_1[] = {0.4, 0.4, 0.2, 1};
+	glEnable(GL_NORMALIZE);
+	float light_ambient_1[] = {0.6, 0.6, 0.1, 1};
+	float light_diffuse_1[] = {1, 1, 0.5, 1};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse_1);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular_1);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.5);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse_1);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular_1);
+	glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.5);
 	glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse_1);
-	glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular_1);
+	glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
 	glLightfv(GL_LIGHT3, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse_1);
-	glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular_1);
+	glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 0.5);
 	glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT4, GL_DIFFUSE, light_diffuse_1);
-	glLightfv(GL_LIGHT4, GL_SPECULAR, light_specular_1);
+	glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT4, GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT4, GL_QUADRATIC_ATTENUATION, 0.5);
 	glLightfv(GL_LIGHT5, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT5, GL_DIFFUSE, light_diffuse_1);
-	glLightfv(GL_LIGHT5, GL_SPECULAR, light_specular_1);
+	glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT5, GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT5, GL_QUADRATIC_ATTENUATION, 0.5);
 	
-	float light_ambient_2[] = {0.9, 0.9, 0.8, 1};
-	float light_diffuse_2[] = {0.6, 0.6, 0.5, 1};
-	float light_specular_2[] = {0.8, 0.7, 0.8, 1};
+	float light_ambient_2[] = {0, 1, 0.1, 1};
+	float light_diffuse_2[] = {1.0, 0.4, 0.2, 1};
 	glLightfv(GL_LIGHT6, GL_AMBIENT, light_ambient_2);
 	glLightfv(GL_LIGHT6, GL_DIFFUSE, light_diffuse_2);
-	glLightfv(GL_LIGHT6, GL_SPECULAR, light_specular_2);
+	glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 20);
+    glLightf(GL_LIGHT6, GL_SPOT_EXPONENT, 15);
 	
 }
 
@@ -347,6 +368,9 @@ int main(int argc, char *argv[]) {
 	glutMouseFunc(mouse);
 	glutMainLoop();
 
+	delete cottage;
+	delete diamond;
+	delete lamp;
 	delete ground;
 	return 0;
 	

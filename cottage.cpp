@@ -13,7 +13,7 @@ Cottage::Cottage() {
 	this->load_textures();
 }
 
-void Cottage::draw() {
+void Cottage::draw(bool texture_switch, bool texture_linear) {
 	glPushMatrix();
 	glScaled(0.8, 0.8, 1.1);
 	
@@ -27,9 +27,11 @@ void Cottage::draw() {
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 	
-	glEnable(GL_TEXTURE_2D);
-	this->draw_roof();
-	this->draw_walls();
+	if (texture_switch == true) {
+		glEnable(GL_TEXTURE_2D);
+	}
+	this->draw_roof(texture_linear);
+	this->draw_walls(texture_linear);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 	glFlush();
@@ -40,10 +42,15 @@ void Cottage::load_textures() {
 	texture_wall = this->load_texture("wall.bmp");
 }
 
-void Cottage::draw_roof() {
+void Cottage::draw_roof(bool texture_linear) {
 	glBindTexture(GL_TEXTURE_2D, texture_roof);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (texture_linear == true) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	} else {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
 	glColor3f(1, 1, 1);
 	
 	glBegin(GL_TRIANGLES);
@@ -83,11 +90,16 @@ void Cottage::draw_roof() {
 	glEnd();
 }
 
-void Cottage::draw_walls() {
+void Cottage::draw_walls(bool texture_linear) {
 	
 	glBindTexture(GL_TEXTURE_2D, texture_wall);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (texture_linear == true) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	} else {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
 	glColor3f(1, 1, 1);
 	
 	glBegin(GL_QUADS);

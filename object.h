@@ -18,7 +18,7 @@ class Object {
 	
 protected:
 	
-	virtual GLuint load_texture(const char *name);
+	virtual GLuint load_texture(const char *name); 
 	
 private:
 	

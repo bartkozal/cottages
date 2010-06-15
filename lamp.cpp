@@ -13,25 +13,30 @@ Lamp::Lamp() {}
 
 void Lamp::draw() {
 	
-//	float mat_ambient[] = {0.02, 0.02, 0.02, 1};
-//	float mat_diffuse[] = {0.01, 0.01, 0.01, 1};
-//	float mat_specular[] = {0.4, 0.4, 0.4, 1};
-//	float high_shininess[] = {0.10};
+	float mat_ambient[] = {0.02, 0.02, 0.02, 1};
+	float mat_diffuse[] = {0.01, 0.01, 0.01, 1};
+	float mat_specular[] = {0.4, 0.4, 0.4, 1};
+	float high_shininess[] = {0.10};
+	
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient); 
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 	
 	glPushMatrix();
 	glColor3f(0, 0, 0);
-	
-//	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient); 
-//	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
-//	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-//	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 	
 	glScalef(0.4, 0.4, 0.4);
 	glutSolidCube(0.3);
 	glTranslated(0, 1.3, 0);
 	glPushMatrix();
 	glTranslated(0, 2, 0);
+	glDisable(GL_LIGHTING);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(1, 0.8, 0, 0.2);
 	glutSolidSphere(0.1, 10, 10);
+	glEnable(GL_LIGHTING);
 	glPopMatrix();
 	glPushMatrix();
 	glScalef(0.1, 3, 0.1);
