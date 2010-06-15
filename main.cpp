@@ -99,7 +99,7 @@ void draw() {
 	glLightfv(GL_LIGHT4, GL_POSITION, light_position_4);
 	float light_position_5[] = {2.5, 1, 0, 1};
 	glLightfv(GL_LIGHT5, GL_POSITION, light_position_5);
-	float light_position_6[] = {10, 10, 10, 1};
+	float light_position_6[] = {4, 4, -4, 1};
 	glLightfv(GL_LIGHT6, GL_POSITION, light_position_6);
 	for (int i = -2; i < 1; i++) {
 		for (int j = -1; j < 1; j++) {
@@ -135,31 +135,37 @@ void idle() {
 }
 
 // keyboard
-void pressKeys(unsigned char key, int mx, int my) {
+void pressSpecialKeys(int key, int kx, int ky) {
 	switch (key) {
-		case 'a' : delta_angle = -0.01;
+		case GLUT_KEY_LEFT : delta_angle = -0.01;
 			break;
-		case 'd' : delta_angle = 0.01;
+		case GLUT_KEY_RIGHT : delta_angle = 0.01;
 			break;
-		case 'w' : delta_move = 1;
+		case GLUT_KEY_UP : delta_move = 1;
 			break;
-		case 's' : delta_move = -1;
-			break;
-		case 'q' : exit(0);
+		case GLUT_KEY_DOWN : delta_move = -1;
 			break;
 	}
 }
-void releaseKeys(unsigned char key, int mx, int my) {
+
+void releaseSpecialKeys(int key, int kx, int ky) {
 	switch (key) {
-		case 'a' :
-		case 'd' : delta_angle = 0;
+		case GLUT_KEY_LEFT :
+		case GLUT_KEY_RIGHT : delta_angle = 0;
 			break;
-		case 'w' :
-		case 's' : delta_move = 0;
+		case GLUT_KEY_UP :
+		case GLUT_KEY_DOWN : delta_move = 0;
 			break;
-		case 'z' : city_size += 1;
+	}
+}
+
+void releaseKeys(unsigned char key, int kx, int ky) {
+	switch (key) {
+		case 'q' : exit(0);
 			break;
-		case 'x' : if (city_size != 2) city_size -= 1;
+		case 'a' : city_size += 1;
+			break;
+		case 's' : if (city_size != 2) city_size -= 1;
 			break;
 		case '1' :
 			if (light_lamps_1 == true) {
@@ -290,7 +296,7 @@ void init_lights() {
 	
 	float light_ambient_1[] = {0.1, 0.1, 0.0, 1};
 	float light_diffuse_1[] = {0.6, 0.6, 0.5, 1};
-	float light_specular_1[] = {0.1, 0, 0.1, 1};
+	float light_specular_1[] = {0.4, 0.4, 0.2, 1};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse_1);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular_1);
@@ -334,7 +340,8 @@ int main(int argc, char *argv[]) {
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(draw);
 	glutIdleFunc(idle);
-	glutKeyboardFunc(pressKeys);
+	glutSpecialFunc(pressSpecialKeys);
+	glutSpecialUpFunc(releaseSpecialKeys);
 	glutKeyboardUpFunc(releaseKeys);
 	glutMotionFunc(motion);
 	glutMouseFunc(mouse);

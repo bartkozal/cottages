@@ -16,6 +16,17 @@ Cottage::Cottage() {
 void Cottage::draw() {
 	glPushMatrix();
 	glScaled(0.8, 0.8, 1.1);
+	
+	float mat_ambient[] = {0.10, 0.05, 0.11, 1};
+	float mat_diffuse[] = {0.42, 0.47, 0.54, 1};
+	float mat_specular[] = {0.33, 0.33, 0.52, 1};
+	float high_shininess[] = {9.84};
+	
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient); 
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+	
 	glEnable(GL_TEXTURE_2D);
 	this->draw_roof();
 	this->draw_walls();

@@ -13,8 +13,18 @@ Lamp::Lamp() {}
 
 void Lamp::draw() {
 	
+//	float mat_ambient[] = {0.02, 0.02, 0.02, 1};
+//	float mat_diffuse[] = {0.01, 0.01, 0.01, 1};
+//	float mat_specular[] = {0.4, 0.4, 0.4, 1};
+//	float high_shininess[] = {0.10};
+	
 	glPushMatrix();
 	glColor3f(0, 0, 0);
+	
+//	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient); 
+//	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse); 
+//	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+//	glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 	
 	glScalef(0.4, 0.4, 0.4);
 	glutSolidCube(0.3);
