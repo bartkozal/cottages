@@ -34,7 +34,7 @@ void Lamp::draw() {
 	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor4f(1, 0.8, 0, 0.2);
+	glColor4f(1, 0.8, 0, 0.5);
 	glutSolidSphere(0.1, 10, 10);
 	glEnable(GL_LIGHTING);
 	glPopMatrix();

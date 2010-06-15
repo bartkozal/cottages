@@ -28,10 +28,14 @@ float gred = 0, ggreen = 0, gblue = 0;
 char object = 'c';
 
 int city_size = 2;
+
 bool light_lamps_1 = false;
 bool light_lamps_2 = false;
+bool light_lamps_3 = false;
+
 bool texture_switch = true;
 bool texture_linear = true;
+
 bool go_left = true;
 bool go_backword = true;
 
@@ -103,6 +107,8 @@ void draw() {
 		}
 	}
 	
+	// lights
+	
 	float light_position_0[] = {-7.5, 1, -7.5, 1};
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position_0);
 	float light_position_1[] = {-7.5, 1, 0, 1};
@@ -116,13 +122,14 @@ void draw() {
 	float light_position_5[] = {2.5, 1, 0, 1};
 	glLightfv(GL_LIGHT5, GL_POSITION, light_position_5);
 	
-	// lights
-	
-	float light_position_6[] = {2, 10, 2, 1};
-	float spot_direction_6[] = {spot_direction_x, -5, spot_direction_z};
+	float light_position_6[] = {0, 5, 0, 1};
+	float spot_direction_6[] = {spot_direction_x, -1, spot_direction_z};
 	glLightfv(GL_LIGHT6, GL_POSITION, light_position_6);
 	glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, spot_direction_6);
 
+	float light_position_7[] = {0, 5, 0, 1};
+	glLightfv(GL_LIGHT7, GL_POSITION, light_position_7);
+	
 	glutSwapBuffers();
 }
 void reshape(int width, int height) {
@@ -144,22 +151,22 @@ void reshape(int width, int height) {
 
 // idle/refresh
 void idle() {
-	if (go_left == true && spot_direction_x > -5) {
-		spot_direction_x -= 0.05;
+	if (go_left == true && spot_direction_x > -7) {
+		spot_direction_x -= 0.02;
 	} else if (go_left == true) {
 		go_left = false;
-	} else if (go_left == false && spot_direction_x < 0) {
-		spot_direction_x += 0.05;
+	} else if (go_left == false && spot_direction_x < 7) {
+		spot_direction_x += 0.02;
 	} else if (go_left == false) {
 		go_left = true;
 	}
 	
-	if (go_backword == true && spot_direction_z > -5) {
-		spot_direction_z -= 0.02;
+	if (go_backword == true && spot_direction_z > -7) {
+		spot_direction_z -= 0.05;
 	} else if (go_backword == true) {
 		go_backword = false;
-	} else if (go_backword == false && spot_direction_z < 0) {
-		spot_direction_z += 0.02;
+	} else if (go_backword == false && spot_direction_z < 7) {
+		spot_direction_z += 0.05;
 	} else if (go_backword == false) {
 		go_backword = true;
 	}
@@ -194,13 +201,13 @@ void releaseKeys(unsigned char key, int kx, int ky) {
 	switch (key) {
 		case 'q' : exit(0);
 			break;
-		case 'a' : city_size += 1;
+		case 'z' : city_size += 1;
 			break;
-		case 's' : if (city_size != 2) city_size -= 1;
+		case 'x' : if (city_size != 2) city_size -= 1;
 			break;
-		case 'z' : texture_switch == true ? texture_switch = false : texture_switch = true;
+		case 'c' : texture_switch == true ? texture_switch = false : texture_switch = true;
 			break;
-		case 'x' : texture_linear == true ? texture_linear = false : texture_linear = true;
+		case 'v' : texture_linear == true ? texture_linear = false : texture_linear = true;
 			break;
 		case '1' :
 			if (light_lamps_1 == true) {
@@ -228,6 +235,15 @@ void releaseKeys(unsigned char key, int kx, int ky) {
 			} else {
 				glEnable(GL_LIGHT6);
 				light_lamps_2 = true;
+			}
+			break;
+		case '3' :
+			if (light_lamps_3 == true) {
+				glDisable(GL_LIGHT7);
+				light_lamps_3 = false;
+			} else {
+				glEnable(GL_LIGHT7);
+				light_lamps_3 = true;
 			}
 			break;
 	}
@@ -329,45 +345,52 @@ void init_objects() {
 void init_lights() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
-	float light_ambient_1[] = {0.6, 0.6, 0.1, 1};
+	float light_ambient_1[] = {0.9, 0.9, 0.6, 1};
 	float light_diffuse_1[] = {1, 1, 0.5, 1};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse_1);
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.1);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse_1);
-	glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.1);
 	glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse_1);
-	glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.1);
 	glLightfv(GL_LIGHT3, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse_1);
-	glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 0.1);
 	glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT4, GL_DIFFUSE, light_diffuse_1);
-	glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT4, GL_LINEAR_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT4, GL_QUADRATIC_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT4, GL_LINEAR_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT4, GL_QUADRATIC_ATTENUATION, 0.1);
 	glLightfv(GL_LIGHT5, GL_AMBIENT, light_ambient_1);
 	glLightfv(GL_LIGHT5, GL_DIFFUSE, light_diffuse_1);
-	glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT5, GL_LINEAR_ATTENUATION, 0.5);
-	glLightf(GL_LIGHT5, GL_QUADRATIC_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT5, GL_LINEAR_ATTENUATION, 0.1);
+	glLightf(GL_LIGHT5, GL_QUADRATIC_ATTENUATION, 0.1);
 	
-	float light_ambient_2[] = {0, 1, 0.1, 1};
-	float light_diffuse_2[] = {1.0, 0.4, 0.2, 1};
+	float light_ambient_2[] = {1, 1, 1, 1};
+	float light_diffuse_2[] = {0.8, 0.8, 0.2, 1};
 	glLightfv(GL_LIGHT6, GL_AMBIENT, light_ambient_2);
 	glLightfv(GL_LIGHT6, GL_DIFFUSE, light_diffuse_2);
-	glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 20);
-    glLightf(GL_LIGHT6, GL_SPOT_EXPONENT, 15);
+	glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 25);
+    glLightf(GL_LIGHT6, GL_SPOT_EXPONENT, 10);
+	
+	float light_ambient_3[] = {0.9, 0.9, 0.2, 1};
+	float light_diffuse_3[] = {0.9, 0.9, 0.5, 1};
+	float light_specular_3[] = {1, 1, 1, 1};
+	glLightfv(GL_LIGHT7, GL_AMBIENT, light_ambient_3);
+	glLightfv(GL_LIGHT7, GL_DIFFUSE, light_diffuse_3);
+	glLightfv(GL_LIGHT7, GL_SPECULAR, light_specular_3);
 	
 }
 
