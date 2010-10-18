@@ -46,7 +46,28 @@ void Lamp::draw() {
 	glScalef(1, 2, 1);
 	glColor3f(1, 1, 1);
 	glutWireCube(0.5);
-	
+	glPushMatrix();
+	glTranslated(0, -0.10, 0);
+	glScalef(0.35, 0.35, 0.35);
+	glBegin(GL_TRIANGLES);	
+	glNormal3f(0, 1, 1);
+	glVertex3f(-1, 1, 1);
+	glVertex3f(1, 1, 1);
+	glVertex3f(0, 1.5, 0);	
+	glNormal3f(1, 1, 0);
+	glVertex3f(1, 1, 1);
+	glVertex3f(1, 1, -1);
+	glVertex3f(0, 1.5, 0);	
+	glNormal3f(0, 1, -1);
+	glVertex3f(1, 1, -1);
+	glVertex3f(-1, 1, -1);
+	glVertex3f(0, 1.5, 0);	
+	glNormal3f(-1, 1, 0);
+	glVertex3f(-1, 1, -1);
+	glVertex3f(-1, 1, 1);
+	glVertex3f(0, 1.5, 0);	
+	glEnd();
+	glPopMatrix();
 	
 	// glass
 	
